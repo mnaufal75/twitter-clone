@@ -15,15 +15,27 @@ const datas = [
   },
 ]
 
-const Main = () => {
+const Profile = () => {
   return (
     <div className="container w-1/2 flex flex-col">
+      <div className="py-32">
+        <img
+          className="rounded-full shadow-inner my-2 h-32 w-32"
+          src="https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo" />
+        <span className="font-bold">Muhammad Naufal</span>
+        <br />
+        <span>@mnaufal75</span>
+        <br />
+        <span>Joined August 2011</span>
+        <br />
+        <span>0 Following 8 Follower</span>
+      </div>
       {datas.map((data) => {
         return (
           <div className="flex flex-row p-2 my-2">
             <div className="w-1/6">
               <div>
-                <img className="shadow-inner rounded-full" src={data.profile_image} />
+                <img className="shadow-inner rounded-full h-16 w-16" src={data.profile_image} />
               </div>
             </div>
             <div className="w-5/6">
@@ -39,4 +51,4 @@ const Main = () => {
   )
 }
 
-export default Main;
+export default Profile;

@@ -1,14 +1,28 @@
 import LeftBar from './components/LeftBar';
 import RightBar from './components/RightBar';
-import Main from './components/Main';
+import Profile from './components/Profile';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 function App() {
   return (
-    <div className="App container mx-auto px-4 flex">
-      <LeftBar />
-      <Main />
-      <RightBar />
-    </div>
+    <Router>
+      <div className="App container mx-auto px-16 flex">
+        <LeftBar />
+
+        <Switch>
+          <Route path="/:username">
+            <Profile />
+          </Route>
+        </Switch>
+
+        <RightBar />
+      </div>
+    </Router>
+
   );
 }
 
