@@ -5,6 +5,12 @@ const schema = mongoose.Schema({
   password: { type: String, required: true },
   name: String,
   date: Date,
+  tweets: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tweet",
+    }
+  ]
 });
 
 module.exports = mongoose.model("User", schema);

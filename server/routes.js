@@ -1,21 +1,32 @@
 const router = require('express').Router();
 
 const User = require('./models/User');
+const Tweet = require('./models/Tweet');
 
-router.get('/:username', async (req, res) => {
-  const user = await User.find();
+router.get('/tweets/:username', async (req, res) => {
+  const user = await User
+    .find({
+      username: req.params.username,
+    })
+    .populate("tweets")
   res.send(user);
 });
 
-router.post('/:username', async (req, res) => {
-  const user = new User({
-    username: req.body.username,
-    password: req.body.password,
-    name: req.body.name,
-    date: req.body.date,
+router.post('/tweets/:username', async (req, res) => {
+  const user = await User
+    .findOne({
+      username: req.params.username,
+    })
+
+  const tweet = new Tweet({
+    date: Date.now(),
+    text: req.body.text,
   })
+
+  await user.tweets.push(tweet);
   await user.save();
-  res.send(user);
+  await tweet.save();
+  res.send(tweet);
 });
 
 // router.get('/:username/:tweetId', (req, res) => {
