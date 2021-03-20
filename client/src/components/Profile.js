@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import dayjs from 'dayjs';
 
 const Profile = () => {
   const [datas, setDatas] = useState([]);
@@ -38,7 +39,7 @@ const Profile = () => {
             </div>
             <div className="w-5/6">
               <span className="font-bold">{datas.name} </span>
-              <span>@{datas.username} . {data.date}</span>
+              <span>@{datas.username} · {dayjs(data.date).format('MMM D, YYYY')}</span>
               <br />
               <span>{data.text}</span>
             </div>
