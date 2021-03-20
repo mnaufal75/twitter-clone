@@ -1,21 +1,19 @@
-const datas = [
-  {
-    profile_image: 'https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo',
-    name: 'Muhammad Naufal',
-    username: 'mnaufal75',
-    date: 'March 17, 2021',
-    tweet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed viverra tellus in hac habitasse platea dictumst vestibulum. Mattis nunc sed blandit libero volutpat sed cras. Faucibus scelerisque eleifend donec pretium. Semper auctor neque vitae tempus quam pellentesque nec nam aliquam. Blandit volutpat maecenas volutpat blandit aliquam. Platea dictumst quisque sagittis purus sit amet volutpat consequat. Erat pellentesque adipiscing commodo elit. Lorem mollis aliquam ut porttitor leo. Consequat semper viverra nam libero. Commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend. Non quam lacus suspendisse faucibus interdum. Ut tristique et egestas quis ipsum suspendisse ultrices. Tortor pretium viverra suspendisse potenti. Rhoncus mattis rhoncus urna neque viverra justo nec.',
-  },
-  {
-    profile_image: 'https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo',
-    name: 'Muhammad Naufal',
-    username: 'mnaufal75',
-    date: 'March 17, 2021',
-    tweet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Non pulvinar neque laoreet suspendisse interdum. Sem nulla pharetra diam sit amet. At in tellus integer feugiat scelerisque varius morbi enim. Accumsan sit amet nulla facilisi. Dictum fusce ut placerat orci nulla pellentesque. Mauris vitae ultricies leo integer. Rhoncus dolor purus non enim praesent elementum facilisis. Arcu bibendum at varius vel pharetra vel turpis nunc eget. Nisi quis eleifend quam adipiscing vitae proin sagittis nisl.',
-  },
-]
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const Profile = () => {
+  const [datas, setDatas] = useState([]);
+
+  const { username } = useParams();
+
+  useEffect(async () => {
+    const result = await axios(`http://localhost:5000/api/tweets/${username}`);
+    console.log(result);
+
+    setDatas(result.data);
+  }, [datas]);
+
   return (
     <div className="container w-1/2 flex flex-col">
       <div className="py-32">
@@ -30,19 +28,19 @@ const Profile = () => {
         <br />
         <span>0 Following 8 Follower</span>
       </div>
-      {datas.map((data) => {
+      {datas?.tweets?.map((data) => {
         return (
           <div className="flex flex-row p-2 my-2">
             <div className="w-1/6">
               <div>
-                <img className="shadow-inner rounded-full h-16 w-16" src={data.profile_image} />
+                <img className="shadow-inner rounded-full h-16 w-16" src={'https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo'} />
               </div>
             </div>
             <div className="w-5/6">
-              <span className="font-bold">{data.name} </span>
-              <span>@{data.username} . {data.date}</span>
+              <span className="font-bold">{datas.name} </span>
+              <span>@{datas.username} . {data.date}</span>
               <br />
-              <span>{data.tweet}</span>
+              <span>{data.text}</span>
             </div>
           </div>
         )
