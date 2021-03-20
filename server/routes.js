@@ -4,8 +4,9 @@ const User = require('./models/User');
 const Tweet = require('./models/Tweet');
 
 router.get('/tweets/:username', async (req, res) => {
+  console.log("GET");
   const user = await User
-    .find({
+    .findOne({
       username: req.params.username,
     })
     .populate("tweets")
