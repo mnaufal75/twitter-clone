@@ -1,6 +1,6 @@
-import LeftBar from './components/LeftBar';
-import RightBar from './components/RightBar';
-import Profile from './components/Profile';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import Main from './components/Main';
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,16 +10,18 @@ import {
 function App() {
   return (
     <Router>
-      <div className="App container mx-auto px-16 flex">
-        <LeftBar />
-
+      <div className="App container h-screen mx-auto px-16 flex">
         <Switch>
-          <Route path="/:username">
-            <Profile />
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signup">
+            <SignUp />
+          </Route>
+          <Route>
+            <Main />
           </Route>
         </Switch>
-
-        <RightBar />
       </div>
     </Router>
 
