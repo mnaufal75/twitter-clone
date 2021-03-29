@@ -3,8 +3,26 @@ const router = require('express').Router();
 const User = require('./models/User');
 const Tweet = require('./models/Tweet');
 
+router.post('/signup', async (req, res) => {
+  console.log("signup");
+  const user = new User({ username: req.body.username, password: req.body.password, name: req.body.name });
+  await user.save();
+  res.send(user);
+});
+
+router.post('/login', async (req, res) => {
+  console.log("login");
+  const user = await User
+    .findOne({
+      username: req.body.username,
+    })
+  if (user && user.password === req.body.password) {
+    console.log("Log in");
+  }
+  res.send(user);
+});
+
 router.get('/tweets/:username', async (req, res) => {
-  console.log("GET");
   const user = await User
     .findOne({
       username: req.params.username,
