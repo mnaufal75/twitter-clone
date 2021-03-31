@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
@@ -30,21 +30,23 @@ const Profile = () => {
       </div>
       {datas?.tweets?.map((data) => {
         return (
-          <div className="flex flex-row p-2 my-2 border-b-2 border-gray-400">
-            <div className="w-1/6">
-              <div>
-                <img className="shadow-inner rounded-full h-16 w-16" src={'https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo'} />
+          <Link key={data._id} to={`/${username}/status/${data._id}`}>
+            <div className="flex flex-row p-2 my-2 border-b-2 border-gray-400">
+              <div className="w-1/6">
+                <div>
+                  <img className="shadow-inner rounded-full h-16 w-16" src={'https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo'} />
+                </div>
+              </div>
+              <div className="w-5/6">
+                <span className="font-bold">{datas.name} </span>
+                <span>@{datas.username} · {dayjs(data.date).format('MMM D, YYYY')}</span>
+                <br />
+                <span>{data.text}</span>
+                <br />
+                <span>0</span>
               </div>
             </div>
-            <div className="w-5/6">
-              <span className="font-bold">{datas.name} </span>
-              <span>@{datas.username} · {dayjs(data.date).format('MMM D, YYYY')}</span>
-              <br />
-              <span>{data.text}</span>
-              <br />
-              <span>0</span>
-            </div>
-          </div>
+          </Link>
         )
       })}
     </div>
