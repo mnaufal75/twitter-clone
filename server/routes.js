@@ -38,6 +38,7 @@ router.post('/tweets/:username', async (req, res) => {
     })
 
   const tweet = new Tweet({
+    username: user._id,
     date: Date.now(),
     text: req.body.text,
   })
@@ -48,8 +49,16 @@ router.post('/tweets/:username', async (req, res) => {
   res.send(tweet);
 });
 
-// router.get('/:username/:tweetId', (req, res) => {
-//   res.send();
-// });
+router.get('/tweets/:username/:tweetId', async (req, res) => {
+  const tweet = await Tweet
+    .findOne({
+      _id: (req.params.tweetId),
+    })
+  const user = await User
+    .findOne({
+      username: req.params.username,
+    })
+  res.send({ tweet, user });
+});
 
 module.exports = router;

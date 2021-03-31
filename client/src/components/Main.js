@@ -1,5 +1,6 @@
 import LeftBar from './LeftBar';
 import RightBar from './RightBar';
+import Status from './Status';
 import Profile from './Profile';
 import {
   BrowserRouter as Router,
@@ -11,6 +12,11 @@ const Main = () => {
   return (
     <Router>
       <Switch>
+        <Route path="/:username/status/:tweetId">
+          <LeftBar />
+          <Status />
+          <RightBar />
+        </Route>
         <Route path="/:username">
           <LeftBar />
           <Profile />
