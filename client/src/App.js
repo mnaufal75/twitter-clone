@@ -1,3 +1,4 @@
+import { withCookies } from 'react-cookie';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Main from './components/Main';
@@ -7,19 +8,20 @@ import {
   Route,
 } from "react-router-dom";
 
-function App() {
+function App({ cookies }) {
+  console.log('Username: ', cookies.get('username'))
   return (
     <Router>
       <div className="App container h-screen mx-auto px-16 flex">
         <Switch>
           <Route path="/login">
-            <Login />
+            <Login cookies={cookies} />
           </Route>
           <Route path="/signup">
             <SignUp />
           </Route>
           <Route>
-            <Main />
+            <Main cookies={cookies} />
           </Route>
         </Switch>
       </div>
@@ -28,4 +30,4 @@ function App() {
   );
 }
 
-export default App;
+export default withCookies(App);

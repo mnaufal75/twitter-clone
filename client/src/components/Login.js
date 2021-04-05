@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const Login = () => {
+const Login = ({ cookies }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleInput = (e) => {
-    console.log([e.target.name])
     if (e.target.name === 'username') {
       setUsername(e.target.value);
     } else if (e.target.name === 'password') {
@@ -20,6 +19,7 @@ const Login = () => {
     setUsername('');
     setPassword('');
     await axios.post('http://localhost:5000/api/login', query);
+    cookies.set('username', query.username, { path: '/' });
   };
 
   return (
