@@ -8,7 +8,7 @@ import {
   Route,
 } from "react-router-dom";
 
-const Main = () => {
+const Main = ({ cookies }) => {
   return (
     <Router>
       <Switch>
@@ -18,7 +18,7 @@ const Main = () => {
           <RightBar />
         </Route>
         <Route path="/:username">
-          <LeftBar />
+          <LeftBar cookies={cookies} />
           <Profile />
           <RightBar />
         </Route>
