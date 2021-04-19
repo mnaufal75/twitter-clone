@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import ReplyTweetModal from '../modals/ReplyTweetModal';
 
-const Status = () => {
+const Status = ({ cookies }) => {
   const [user, setUser] = useState('');
   const [tweet, setTweet] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const { username, tweetId } = useParams();
 
@@ -15,6 +17,10 @@ const Status = () => {
     setUser(result.data.user);
     setTweet(result.data.tweet);
   }, [user, tweet]);
+
+  const handleReply = () => {
+    setShowModal(true);
+  };
 
   return (
     <div className="container w-1/2 flex flex-col border-r-2 border-l-2 border-gray-400">
@@ -34,7 +40,11 @@ const Status = () => {
         <span className="text-xl">{tweet.text}</span>
         <br />
         <span className="">{dayjs(tweet.date).format('H.mm A · MMM D, YYYY')}</span>
+        <br />
+        <span onClick={handleReply}>R</span>
       </div>
+
+      <ReplyTweetModal cookies={cookies} displayModal={showModal} showModal={setShowModal} reply={{ user, tweet }} />
     </div>
   )
 }
