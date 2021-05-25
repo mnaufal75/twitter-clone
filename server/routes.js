@@ -53,6 +53,14 @@ router.post('/tweets/:username', async (req, res) => {
   await user.tweets.push(tweet);
   await user.save();
   await tweet.save();
+
+  const parentTweet = await Tweet
+    .findOne({
+      _id: req.body.parentTweet,
+    });
+  await parentTweet.childTweet.push(tweet);
+  await parentTweet.save();
+
   res.send(tweet);
 });
 
@@ -62,7 +70,8 @@ router.get('/tweets/:username/:tweetId', async (req, res) => {
       _id: (req.params.tweetId),
     })
     .populate("user")
-    .populate("parentTweet");
+    .populate("parentTweet")
+    .populate("childTweet");
 
   res.send(tweet)
 });

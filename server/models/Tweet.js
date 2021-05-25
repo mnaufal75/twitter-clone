@@ -13,6 +13,10 @@ const schema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Tweet",
   },
+  childTweet: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Tweet",
+  }],
 });
 
 module.exports = mongoose.model("Tweet", schema);
