@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
-const CreateTweetModal = ({ cookies, displayModal, showModal, reply }) => {
+const ReplyTweetModal = ({ cookies, displayModal, showModal, reply }) => {
   const [tweetText, setTweetText] = useState('');
 
   const toggleModal = () => {
@@ -15,7 +15,11 @@ const CreateTweetModal = ({ cookies, displayModal, showModal, reply }) => {
 
   const publishTweet = async () => {
     const username = cookies.get('username');
-    const query = { "username": username, "text": tweetText };
+    const query = {
+      "username": username,
+      "tweetText": tweetText,
+      "parentTweet": reply._id,
+    };
     setTweetText('');
     showModal(!displayModal);
     await axios.post(`http://localhost:5000/api/tweets/${username}`, query);
@@ -35,10 +39,10 @@ const CreateTweetModal = ({ cookies, displayModal, showModal, reply }) => {
               className="rounded-full shadow-inner m-1 col-span-2"
               src="https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo" />
             <div className="col-span-6">
-              <span className="font-bold">{reply?.user?.name} </span>
-              <span>@{reply?.user?.username}  · {dayjs(reply.tweet.date).format('MMM D, YYYY')}</span>
+              <span className="font-bold">{reply?.userFullname} </span>
+              <span>@{reply?.username}  · {dayjs(reply?.date).format('MMM D, YYYY')}</span>
               <br />
-              <span>{reply?.tweet?.text}</span>
+              <span>{reply?.tweetText}</span>
             </div>
           </div>
         }
@@ -58,4 +62,4 @@ const CreateTweetModal = ({ cookies, displayModal, showModal, reply }) => {
   )
 };
 
-export default CreateTweetModal;
+export default ReplyTweetModal;

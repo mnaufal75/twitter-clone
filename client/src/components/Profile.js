@@ -38,10 +38,10 @@ const Profile = () => {
                 </div>
               </div>
               <div className="w-5/6">
-                <span className="font-bold">{datas.name} </span>
-                <span>@{datas.username} · {dayjs(data.date).format('MMM D, YYYY')}</span>
+                <span className="font-bold">{data.userFullname} </span>
+                <span>@{data.username} · {dayjs(data.date).format('MMM D, YYYY')}</span>
                 <br />
-                <span>{data.text}</span>
+                <span>{data.tweetText}</span>
                 <br />
                 <span>0</span>
               </div>

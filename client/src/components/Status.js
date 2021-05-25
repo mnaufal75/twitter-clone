@@ -14,9 +14,8 @@ const Status = ({ cookies }) => {
   useEffect(async () => {
     const result = await axios(`http://localhost:5000/api/tweets/${username}/${tweetId}`);
 
-    setUser(result.data.user);
-    setTweet(result.data.tweet);
-  }, [user, tweet]);
+    setTweet(result.data);
+  }, []);
 
   const handleReply = () => {
     setShowModal(true);
@@ -32,19 +31,19 @@ const Status = ({ cookies }) => {
               src="https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo" />
           </div>
           <div className="flex flex-col justify-center">
-            <span className="font-bold">{user.name} </span>
-            <span className="font-bold">@{user.username}</span>
+            <span className="font-bold">{tweet.userFullname} </span>
+            <span className="font-bold">@{tweet.username}</span>
           </div>
         </div>
 
-        <span className="text-xl">{tweet.text}</span>
+        <span className="text-xl">{tweet.tweetText}</span>
         <br />
         <span className="">{dayjs(tweet.date).format('H.mm A · MMM D, YYYY')}</span>
         <br />
         <span onClick={handleReply}>R</span>
       </div>
 
-      <ReplyTweetModal cookies={cookies} displayModal={showModal} showModal={setShowModal} reply={{ user, tweet }} />
+      <ReplyTweetModal cookies={cookies} displayModal={showModal} showModal={setShowModal} reply={tweet} />
     </div>
   )
 }

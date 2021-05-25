@@ -14,7 +14,10 @@ const CreateTweetModal = ({ cookies, displayModal, showModal }) => {
 
   const publishTweet = async () => {
     const username = cookies.get('username');
-    const query = { "username": username, "text": tweetText };
+    const query = {
+      "username": username,
+      "tweetText": tweetText,
+    };
     setTweetText('');
     showModal(!displayModal);
     await axios.post(`http://localhost:5000/api/tweets/${username}`, query);

@@ -14,7 +14,7 @@ const Main = ({ cookies }) => {
       <Switch>
         <Route path="/:username/status/:tweetId">
           <LeftBar />
-          <Status />
+          <Status cookies={cookies} />
           <RightBar />
         </Route>
         <Route path="/:username">

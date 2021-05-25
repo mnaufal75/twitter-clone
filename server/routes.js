@@ -5,7 +5,11 @@ const Tweet = require('./models/Tweet');
 
 router.post('/signup', async (req, res) => {
   console.log("signup");
-  const user = new User({ username: req.body.username, password: req.body.password, name: req.body.name });
+  const user = new User({
+    username: req.body.username,
+    password: req.body.password,
+    userFullname: req.body.userFullname
+  });
   await user.save();
   res.send(user);
 });
@@ -38,10 +42,13 @@ router.post('/tweets/:username', async (req, res) => {
     })
 
   const tweet = new Tweet({
-    username: user._id,
+    userId: user._id,
+    username: user.username,
+    userFullname: user.userFullname,
     date: Date.now(),
-    text: req.body.text,
-  })
+    tweetText: req.body.tweetText,
+    parentTweet: req.body.parentTweet,
+  });
 
   await user.tweets.push(tweet);
   await user.save();
@@ -54,11 +61,10 @@ router.get('/tweets/:username/:tweetId', async (req, res) => {
     .findOne({
       _id: (req.params.tweetId),
     })
-  const user = await User
-    .findOne({
-      username: req.params.username,
-    })
-  res.send({ tweet, user });
+    .populate("user")
+    .populate("parentTweet");
+
+  res.send(tweet)
 });
 
 module.exports = router;
