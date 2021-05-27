@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
-const Profile = () => {
+const Profile = ({ cookies }) => {
   const [datas, setDatas] = useState([]);
 
   const { username } = useParams();
@@ -14,19 +14,32 @@ const Profile = () => {
     setDatas(result.data);
   }, [datas]);
 
+  const followAccount = async (account) => {
+    const username = cookies.get('username');
+    const query = {
+      username: username,
+    };
+    await axios.post(`http://localhost:5000/api/user/${account}/follow`, query);
+  };
+
   return (
     <div className="container w-1/2 flex flex-col border-r-2 border-l-2 border-gray-400">
       <div className="px-2 py-32">
         <img
           className="rounded-full shadow-inner my-2 h-32 w-32"
           src="https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo" />
-        <span className="font-bold">Muhammad Naufal</span>
+        <span className="font-bold">{datas.userFullname}</span>
         <br />
-        <span>@mnaufal75</span>
-        <br />
+        <div className="flex justify-between">
+          <span>@{datas.username}</span>
+          <button
+            className="m-2 p-2 rounded-full bg-blue-400 text-white text-lg"
+            onClick={() => followAccount(datas.username)}>Follow
+          </button>
+        </div>
         <span>Joined August 2011</span>
         <br />
-        <span>0 Following 8 Follower</span>
+        <span>{datas?.following?.length} Following {datas?.followers?.length} Follower</span>
       </div>
       {datas?.tweets?.map((data) => {
         return (

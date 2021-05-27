@@ -19,7 +19,7 @@ const Main = ({ cookies }) => {
         </Route>
         <Route path="/:username">
           <LeftBar cookies={cookies} />
-          <Profile />
+          <Profile cookies={cookies} />
           <RightBar />
         </Route>
       </Switch>

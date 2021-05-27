@@ -76,4 +76,24 @@ router.get('/tweets/:username/:tweetId', async (req, res) => {
   res.send(tweet)
 });
 
+router.post('/user/:username/follow', async (req, res) => {
+  const follower = await User
+    .findOne({
+      username: req.body.username,
+    })
+
+  const followed = await User
+    .findOne({
+      username: req.params.username,
+    })
+
+  await followed.followers.push(follower);
+  await follower.following.push(followed);
+
+  await follower.save();
+  await followed.save();
+
+  res.send(followed);
+});
+
 module.exports = router;

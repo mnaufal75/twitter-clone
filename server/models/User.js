@@ -10,7 +10,19 @@ const schema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Tweet",
     }
-  ]
+  ],
+  followers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }
+  ],
+  following: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }
+  ],
 });
 
 module.exports = mongoose.model("User", schema);
