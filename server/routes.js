@@ -51,6 +51,14 @@ router.post('/tweets/:username', async (req, res) => {
     parentTweet: req.body.parentTweet,
   });
 
+  user.followers.map(async f => {
+    const follower = await User
+      .findById(String(f._id));
+    console.log(follower);
+    await follower.timeline.push(tweet);
+    await follower.save();
+  });
+
   await user.tweets.push(tweet);
   await user.save();
   await tweet.save();
@@ -59,8 +67,10 @@ router.post('/tweets/:username', async (req, res) => {
     .findOne({
       _id: req.body.parentTweet,
     });
-  await parentTweet.childTweet.push(tweet);
-  await parentTweet.save();
+  if (parentTweet !== null) {
+    await parentTweet.childTweet.push(tweet);
+    await parentTweet.save();
+  }
 
   res.send(tweet);
 });
@@ -120,6 +130,16 @@ router.get('/user/:username/follow', async (req, res) => {
     .populate("following");
 
   res.send({ followers: user.followers, following: user.following });
+});
+
+router.get('/timeline/:username', async (req, res) => {
+  const user = await User
+    .findOne({
+      username: req.params.username,
+    })
+    .populate("timeline");
+
+  res.send(user);
 });
 
 module.exports = router;

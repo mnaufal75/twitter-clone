@@ -23,6 +23,12 @@ const schema = mongoose.Schema({
       ref: "User",
     }
   ],
+  timeline: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tweet",
+    }
+  ],
 });
 
 module.exports = mongoose.model("User", schema);
