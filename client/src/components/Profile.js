@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 
 const Profile = ({ cookies }) => {
   const [datas, setDatas] = useState([]);
+  const [followed, setFollowed] = useState(false);
 
   const { username } = useParams();
 
@@ -14,12 +15,34 @@ const Profile = ({ cookies }) => {
     setDatas(result.data);
   }, [datas]);
 
+  useEffect(async () => {
+    const usernameCookie = cookies.get('username');
+
+    const result = await axios(`http://localhost:5000/api/user/${usernameCookie}/follow`);
+    const followingList = result?.data?.following?.filter(f => (f.username === username));
+
+    // If followingList.length === 0, it means not followed
+    setFollowed(!(followingList.length === 0));
+  }, []);
+
   const followAccount = async (account) => {
-    const username = cookies.get('username');
-    const query = {
-      username: username,
-    };
+    const usernameCookie = cookies.get('username');
+    let query = {}
+    if (followed === false) {
+      query = {
+        username: usernameCookie,
+        follow: true,
+        unfollow: false,
+      };
+    } else {
+      query = {
+        username: usernameCookie,
+        follow: false,
+        unfollow: true,
+      };
+    }
     await axios.post(`http://localhost:5000/api/user/${account}/follow`, query);
+    await setFollowed(!followed);
   };
 
   return (
@@ -34,7 +57,7 @@ const Profile = ({ cookies }) => {
           <span>@{datas.username}</span>
           <button
             className="m-2 p-2 rounded-full bg-blue-400 text-white text-lg"
-            onClick={() => followAccount(datas.username)}>Follow
+            onClick={() => followAccount(datas.username)}>{followed ? "Unfollow" : "Follow"}
           </button>
         </div>
         <span>Joined August 2011</span>
