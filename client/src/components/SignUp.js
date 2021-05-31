@@ -4,24 +4,24 @@ import axios from 'axios';
 const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [userFullname, setUserFullname] = useState('');
 
   const handleInput = (e) => {
     if (e.target.name === 'username') {
       setUsername(e.target.value);
     } else if (e.target.name === 'password') {
       setPassword(e.target.value);
-    } else if (e.target.name === 'name') {
-      setName(e.target.value);
+    } else if (e.target.name === 'userFullname') {
+      setUserFullname(e.target.value);
     }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const query = { username, password, name };
+    const query = { username, password, userFullname };
     setUsername('');
     setPassword('');
-    setName('');
+    setUserFullname('');
     await axios.post('http://localhost:5000/api/signup', query);
   };
 
@@ -34,7 +34,7 @@ const SignUp = () => {
         <br />
         <input className="p-2 m-2 border-2 border-black w-full" name="password" type="password" placeholder="Password" onChange={handleInput}></input>
         <br />
-        <input className="p-2 m-2 border-2 border-black w-full" name="name" type="text" placeholder="Name" onChange={handleInput}></input>
+        <input className="p-2 m-2 border-2 border-black w-full" name="userFullname" type="text" placeholder="Name" onChange={handleInput}></input>
         <br />
         <input className="p-2 m-2 border-2 border-black bg-blue-400 text-white w-full" type="submit" value="Sign Up" onClick={handleSubmit}></input>
       </form>
