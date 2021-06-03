@@ -13,6 +13,9 @@ const Main = ({ cookies }) => {
   return (
     <Router>
       <Switch>
+        <Route exact path="/">
+          <Redirect to="/home" />
+        </Route>
         <Route exact path="/home">
           <LeftBar cookies={cookies} />
           <Home cookies={cookies} />
