@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const routes = require('./routes');
+const dotenv = require('dotenv').config();
 
 const app = express();
 
@@ -11,12 +12,12 @@ app.use(express.json());
 app.use("/api", routes);
 
 mongoose
-  .connect("mongodb+srv://mnaufal75:HYjJYnjNvQ5N3be@cluster0.lva9p.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
   .then(async () => {
-    app.listen(5000, () => {
+    app.listen(process.env.PORT, () => {
       console.log("Starting server");
     });
   })
