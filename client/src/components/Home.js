@@ -25,7 +25,9 @@ const Home = ({ cookies }) => {
                   </div>
                 </div>
                 <div className="w-5/6">
-                  <span className="font-bold">{data.userFullname} </span>
+                  <span className="font-bold hover:underline">
+                    <Link to={`/${data.username}`}>{data.userFullname} </Link>
+                  </span>
                   <span>@{data.username} · {dayjs(data.date).format('MMM D, YYYY')}</span>
                   <br />
                   <span>{data.tweetText}</span>
@@ -37,7 +39,7 @@ const Home = ({ cookies }) => {
           ))
         }
       </div>
-    </div >
+    </div>
   )
 }
 
