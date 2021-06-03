@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router';
 
 const Login = ({ cookies }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const history = useHistory();
 
   const handleInput = (e) => {
     if (e.target.name === 'username') {
@@ -18,8 +21,10 @@ const Login = ({ cookies }) => {
     const query = { username, password };
     setUsername('');
     setPassword('');
+
     await axios.post('http://localhost:5000/api/login', query);
     cookies.set('username', query.username, { path: '/' });
+    history.push("/home");
   };
 
   return (
