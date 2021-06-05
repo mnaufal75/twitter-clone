@@ -60,6 +60,7 @@ router.post('/tweets/:username', async (req, res) => {
   });
 
   await user.tweets.push(tweet);
+  await user.timeline.push(tweet);
   await user.save();
   await tweet.save();
 
