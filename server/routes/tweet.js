@@ -4,6 +4,16 @@ const router = express.Router();
 const User = require('../models/User');
 const Tweet = require('../models/Tweet');
 
+router.get('/:username/timeline', async (req, res) => {
+  const user = await User
+    .findOne({
+      username: req.params.username,
+    })
+    .populate("timeline");
+
+  res.send(user);
+});
+
 router.get('/:username', async (req, res) => {
   const user = await User
     .findOne({
@@ -64,16 +74,6 @@ router.get('/:username/:tweetId', async (req, res) => {
     .populate("childTweet");
 
   res.send(tweet)
-});
-
-router.get('/timeline/:username', async (req, res) => {
-  const user = await User
-    .findOne({
-      username: req.params.username,
-    })
-    .populate("timeline");
-
-  res.send(user);
 });
 
 module.exports = router;
