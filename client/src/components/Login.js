@@ -22,7 +22,7 @@ const Login = ({ cookies }) => {
     setUsername('');
     setPassword('');
 
-    await axios.post('http://localhost:5000/api/login', query);
+    await axios.post('http://localhost:5000/api/auth/login', query);
     cookies.set('username', query.username, { path: '/' });
     history.push("/home");
   };

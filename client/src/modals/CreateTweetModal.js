@@ -20,7 +20,7 @@ const CreateTweetModal = ({ cookies, displayModal, showModal }) => {
     };
     setTweetText('');
     showModal(!displayModal);
-    await axios.post(`http://localhost:5000/api/tweets/${username}`, query);
+    await axios.post(`http://localhost:5000/api/tweet/${username}`, query);
   };
 
   return (

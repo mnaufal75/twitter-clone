@@ -22,7 +22,7 @@ const ReplyTweetModal = ({ cookies, displayModal, showModal, reply }) => {
     };
     setTweetText('');
     showModal(!displayModal);
-    await axios.post(`http://localhost:5000/api/tweets/${username}`, query);
+    await axios.post(`http://localhost:5000/api/tweet/${username}`, query);
   };
 
   return (

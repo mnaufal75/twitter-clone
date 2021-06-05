@@ -11,7 +11,7 @@ const Status = ({ cookies }) => {
   const { username, tweetId } = useParams();
 
   useEffect(async () => {
-    const result = await axios(`http://localhost:5000/api/tweets/${username}/${tweetId}`);
+    const result = await axios(`http://localhost:5000/api/tweet/${username}/${tweetId}`);
 
     setTweet(result.data);
   }, []);

@@ -8,7 +8,7 @@ const Home = ({ cookies }) => {
 
   useEffect(async () => {
     const usernameCookie = cookies.get('username');
-    const result = await axios(`http://localhost:5000/api/timeline/${usernameCookie}`);
+    const result = await axios(`http://localhost:5000/api/tweet/timeline/${usernameCookie}`);
     setDatas(result.data.timeline);
   }, []);
 

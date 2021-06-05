@@ -10,7 +10,7 @@ const Profile = ({ cookies }) => {
   const { username } = useParams();
 
   useEffect(async () => {
-    const result = await axios(`http://localhost:5000/api/tweets/${username}`);
+    const result = await axios(`http://localhost:5000/api/tweet/${username}`);
 
     setDatas(result.data);
   }, [datas]);

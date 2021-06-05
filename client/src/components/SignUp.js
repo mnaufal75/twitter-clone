@@ -22,7 +22,7 @@ const SignUp = () => {
     setUsername('');
     setPassword('');
     setUserFullname('');
-    await axios.post('http://localhost:5000/api/signup', query);
+    await axios.post('http://localhost:5000/api/auth/signup', query);
   };
 
   return (
