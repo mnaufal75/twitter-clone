@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
-const Home = ({ cookies }) => {
+const mapStateToProps = (state) => {
+  return { token: state.token };
+};
+
+const Home = ({ token }) => {
   const [datas, setDatas] = useState([]);
 
   useEffect(async () => {
-    const token = cookies.get('token');
     const result = await axios(`http://localhost:5000/api/tweet/timeline`, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -47,4 +51,4 @@ const Home = ({ cookies }) => {
   )
 }
 
-export default Home;
+export default connect(mapStateToProps)(Home);

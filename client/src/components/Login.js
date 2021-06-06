@@ -1,8 +1,16 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useHistory } from 'react-router';
+import { connect } from 'react-redux';
 
-const Login = ({ cookies }) => {
+import { login } from '../actions/index';
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (query) => dispatch(login(query)),
+  }
+}
+
+const Login = ({ login }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -22,8 +30,7 @@ const Login = ({ cookies }) => {
     setUsername('');
     setPassword('');
 
-    const result = await axios.post('http://localhost:5000/api/auth/login', query);
-    cookies.set('token', result.data, { path: '/' });
+    await login(query);
     history.push("/home");
   };
 
@@ -42,4 +49,4 @@ const Login = ({ cookies }) => {
   )
 }
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);
