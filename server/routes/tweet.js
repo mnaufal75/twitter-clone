@@ -1,18 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const User = require('../models/User');
 const Tweet = require('../models/Tweet');
 
-router.get('/:username/timeline', async (req, res) => {
-  const user = await User
-    .findOne({
-      username: req.params.username,
-    })
-    .populate("timeline");
+router.get('/timeline/', passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const user = await User
+      .findOne({
+        username: req.user.username,
+      })
+      .populate("timeline");
 
-  res.send(user);
-});
+    res.send(user);
+  });
 
 router.get('/:username', async (req, res) => {
   const user = await User

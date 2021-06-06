@@ -22,8 +22,8 @@ const Login = ({ cookies }) => {
     setUsername('');
     setPassword('');
 
-    await axios.post('http://localhost:5000/api/auth/login', query);
-    cookies.set('username', query.username, { path: '/' });
+    const result = await axios.post('http://localhost:5000/api/auth/login', query);
+    cookies.set('token', result.data, { path: '/' });
     history.push("/home");
   };
 

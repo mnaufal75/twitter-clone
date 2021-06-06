@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 
 function App({ cookies }) {
-  console.log('Username: ', cookies.get('username'))
   return (
     <Router>
       <div className="App container h-screen mx-auto px-16 flex">

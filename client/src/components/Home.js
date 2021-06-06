@@ -7,8 +7,12 @@ const Home = ({ cookies }) => {
   const [datas, setDatas] = useState([]);
 
   useEffect(async () => {
-    const usernameCookie = cookies.get('username');
-    const result = await axios(`http://localhost:5000/api/tweet/${usernameCookie}/timeline`);
+    const token = cookies.get('token');
+    const result = await axios(`http://localhost:5000/api/tweet/timeline`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     setDatas(result.data.timeline);
   }, []);
 
@@ -16,7 +20,7 @@ const Home = ({ cookies }) => {
     <div className="container w-1/2 flex flex-col border-r-2 border-l-2 border-gray-400">
       <div className="px-2">
         {
-          datas.map(data => (
+          datas?.map(data => (
             <Link key={data._id} to={`/${data.username}/status/${data._id}`}>
               <div className="flex flex-row p-2 my-2 border-b-2 border-gray-400">
                 <div className="w-1/6">
