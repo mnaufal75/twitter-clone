@@ -3,6 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faReply, faRetweet } from '@fortawesome/free-solid-svg-icons';
+import ReplyTweetModal from '../modals/ReplyTweetModal';
 
 const mapStateToProps = (state) => {
   return { username: state.username };
@@ -11,6 +14,8 @@ const mapStateToProps = (state) => {
 const Profile = ({ cookies, username }) => {
   const [datas, setDatas] = useState([]);
   const [followed, setFollowed] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [tweet, setTweet] = useState('');
 
   const usernameProfile = useParams().username;
 
@@ -27,6 +32,11 @@ const Profile = ({ cookies, username }) => {
     // If followingList.length === 0, it means not followed
     setFollowed(!(followingList.length === 0));
   }, []);
+
+  const handleReply = (data) => {
+    setShowModal(true);
+    setTweet(data);
+  };
 
   const followAccount = async (username) => {
     let query = {}
@@ -68,14 +78,14 @@ const Profile = ({ cookies, username }) => {
       </div>
       {datas?.tweets?.map((data) => {
         return (
-          <Link key={data._id} to={`/${username}/status/${data._id}`}>
-            <div className="flex flex-row p-2 my-2 border-b border-gray-400">
-              <div className="w-1/6">
-                <div>
-                  <img className="shadow-inner rounded-full h-16 w-16" src={'https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo'} />
-                </div>
+          <div className="flex flex-row p-2 my-2 border-b border-gray-400">
+            <div className="w-1/6">
+              <div>
+                <img className="shadow-inner rounded-full h-16 w-16" src={'https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo'} />
               </div>
-              <div className="w-5/6">
+            </div>
+            <div className="w-5/6">
+              <Link key={data._id} to={`/${usernameProfile}/status/${data._id}`}>
                 <span className="font-bold hover:underline">
                   <Link to={`/${data.username}`}>{data.userFullname} </Link>
                 </span>
@@ -83,12 +93,22 @@ const Profile = ({ cookies, username }) => {
                 <br />
                 <span>{data.tweetText}</span>
                 <br />
-                <span>0</span>
+              </Link>
+              <div className="mt-4">
+                <span onClick={() => handleReply(data)} className="mx-4">
+                  <FontAwesomeIcon icon={faReply} />
+                </span>
+                {/* <span onClick={handleReply}> */}
+                <span className="mx-4">
+                  <FontAwesomeIcon icon={faRetweet} />
+                </span>
               </div>
             </div>
-          </Link>
+          </div>
         )
       })}
+
+      <ReplyTweetModal cookies={cookies} displayModal={showModal} showModal={setShowModal} reply={tweet} />
     </div>
   )
 }

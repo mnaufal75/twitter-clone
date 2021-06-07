@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faReply, faRetweet } from '@fortawesome/free-solid-svg-icons';
 import ReplyTweetModal from '../modals/ReplyTweetModal';
 
 const Status = ({ cookies }) => {
   const [tweet, setTweet] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [modalTweet, setModalTweet] = useState('');
 
   const { username, tweetId } = useParams();
 
@@ -16,7 +19,8 @@ const Status = ({ cookies }) => {
     setTweet(result.data);
   }, []);
 
-  const handleReply = () => {
+  const handleReply = (tweet) => {
+    setModalTweet(tweet);
     setShowModal(true);
   };
 
@@ -48,7 +52,15 @@ const Status = ({ cookies }) => {
         <br />
         <span className="">{dayjs(tweet.date).format('H.mm A · MMM D, YYYY')}</span>
         <br />
-        <span onClick={handleReply}>R</span>
+        <div className="mt-4">
+          <span onClick={() => handleReply(tweet)} className="mx-4">
+            <FontAwesomeIcon icon={faReply} />
+          </span>
+          {/* <span onClick={handleReply}> */}
+          <span className="mx-4">
+            <FontAwesomeIcon icon={faRetweet} />
+          </span>
+        </div>
       </div>
 
       {tweet?.childTweet &&
@@ -69,7 +81,15 @@ const Status = ({ cookies }) => {
                   <br />
                   <span>{t.tweetText}</span>
                   <br />
-                  <span>0</span>
+                  <div className="mt-4">
+                    <span onClick={() => handleReply(t)} className="mx-4">
+                      <FontAwesomeIcon icon={faReply} />
+                    </span>
+                    {/* <span onClick={handleReply}> */}
+                    <span className="mx-4">
+                      <FontAwesomeIcon icon={faRetweet} />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -77,7 +97,7 @@ const Status = ({ cookies }) => {
         })
       }
 
-      <ReplyTweetModal cookies={cookies} displayModal={showModal} showModal={setShowModal} reply={tweet} />
+      <ReplyTweetModal cookies={cookies} displayModal={showModal} showModal={setShowModal} reply={modalTweet} />
     </div>
   )
 }
