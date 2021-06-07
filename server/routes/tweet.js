@@ -26,10 +26,22 @@ router.get('/:username', async (req, res) => {
   res.send(user);
 });
 
-router.post('/:username', async (req, res) => {
+router.get('/:username/:tweetId', async (req, res) => {
+  const tweet = await Tweet
+    .findOne({
+      _id: (req.params.tweetId),
+    })
+    .populate("user")
+    .populate("parentTweet")
+    .populate("childTweet");
+
+  res.send(tweet)
+});
+
+router.post('/', async (req, res) => {
   const user = await User
     .findOne({
-      username: req.params.username,
+      username: req.body.username,
     })
 
   const tweet = new Tweet({
@@ -64,18 +76,6 @@ router.post('/:username', async (req, res) => {
   }
 
   res.send(tweet);
-});
-
-router.get('/:username/:tweetId', async (req, res) => {
-  const tweet = await Tweet
-    .findOne({
-      _id: (req.params.tweetId),
-    })
-    .populate("user")
-    .populate("parentTweet")
-    .populate("childTweet");
-
-  res.send(tweet)
 });
 
 module.exports = router;

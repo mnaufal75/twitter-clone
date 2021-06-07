@@ -1,8 +1,22 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 
-const ReplyTweetModal = ({ cookies, displayModal, showModal, reply }) => {
+import { createTweet } from '../actions/index';
+
+const mapStateToProps = (state) => {
+  return {
+    username: state.username,
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createTweet: (query) => dispatch(createTweet(query)),
+  }
+};
+
+const ReplyTweetModal = ({ cookies, displayModal, showModal, reply, username, createTweet }) => {
   const [tweetText, setTweetText] = useState('');
 
   const toggleModal = () => {
@@ -14,7 +28,6 @@ const ReplyTweetModal = ({ cookies, displayModal, showModal, reply }) => {
   };
 
   const publishTweet = async () => {
-    const username = cookies.get('username');
     const query = {
       "username": username,
       "tweetText": tweetText,
@@ -22,7 +35,7 @@ const ReplyTweetModal = ({ cookies, displayModal, showModal, reply }) => {
     };
     setTweetText('');
     showModal(!displayModal);
-    await axios.post(`http://localhost:5000/api/tweet/${username}`, query);
+    await createTweet(query);
   };
 
   return (
@@ -62,4 +75,4 @@ const ReplyTweetModal = ({ cookies, displayModal, showModal, reply }) => {
   )
 };
 
-export default ReplyTweetModal;
+export default connect(mapStateToProps, mapDispatchToProps)(ReplyTweetModal);

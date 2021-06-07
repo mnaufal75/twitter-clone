@@ -1,7 +1,21 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 
-const CreateTweetModal = ({ cookies, displayModal, showModal }) => {
+import { createTweet } from '../actions';
+
+const mapStateToProps = (state) => {
+  return {
+    username: state.username,
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createTweet: (query) => dispatch(createTweet(query)),
+  }
+};
+
+const CreateTweetModal = ({ cookies, displayModal, showModal, username, createTweet }) => {
   const [tweetText, setTweetText] = useState('');
 
   const toggleModal = () => {
@@ -13,14 +27,13 @@ const CreateTweetModal = ({ cookies, displayModal, showModal }) => {
   };
 
   const publishTweet = async () => {
-    const username = cookies.get('username');
     const query = {
-      "username": username,
-      "tweetText": tweetText,
+      'username': username,
+      'tweetText': tweetText,
     };
     setTweetText('');
     showModal(!displayModal);
-    await axios.post(`http://localhost:5000/api/tweet/${username}`, query);
+    await createTweet(query);
   };
 
   return (
@@ -45,4 +58,4 @@ const CreateTweetModal = ({ cookies, displayModal, showModal }) => {
   )
 };
 
-export default CreateTweetModal;
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTweetModal);

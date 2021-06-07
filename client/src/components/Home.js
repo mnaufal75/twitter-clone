@@ -1,30 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import dayjs from 'dayjs';
 
+import { getTimeline } from '../actions/index';
+
 const mapStateToProps = (state) => {
-  return { token: state.token };
+  return { token: state.token, timeline: state.timeline };
 };
 
-const Home = ({ token }) => {
-  const [datas, setDatas] = useState([]);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getTimeline: (token) => dispatch(getTimeline(token)),
+  }
+};
+
+const Home = ({ token, timeline, getTimeline }) => {
 
   useEffect(async () => {
-    const result = await axios(`http://localhost:5000/api/tweet/timeline`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setDatas(result.data.timeline);
+    await getTimeline(token);
   }, []);
 
   return (
     <div className="container w-1/2 flex flex-col border-r-2 border-l-2 border-gray-400">
       <div className="px-2">
         {
-          datas?.map(data => (
+          timeline?.map(data => (
             <Link key={data._id} to={`/${data.username}/status/${data._id}`}>
               <div className="flex flex-row p-2 my-2 border-b-2 border-gray-400">
                 <div className="w-1/6">
@@ -51,4 +52,4 @@ const Home = ({ token }) => {
   )
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
