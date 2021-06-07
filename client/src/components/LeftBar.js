@@ -32,15 +32,15 @@ const LeftBar = ({ cookies, username, userFullname }) => {
   return (
     <div className="container w-1/4 h-full flex flex-col">
       <div className="fixed top-0 flex flex-col">
-        <span>Home</span>
-        <span>Explore</span>
-        <span>Notifications</span>
-        <span>Messages</span>
-        <span>Bookmark</span>
-        <span>Lists</span>
-        <span>Profile</span>
-        <span>More</span>
-        <button onClick={() => setShowModal(!showModal)}>Tweet</button>
+        <span className="my-2 text-lg"><Link to="/home">Home</Link></span>
+        <span className="my-2 text-lg"><Link to="#">Explore</Link></span>
+        <span className="my-2 text-lg"><Link to="#">Notifications</Link></span>
+        <span className="my-2 text-lg"><Link to="#">Messages</Link></span>
+        <span className="my-2 text-lg"><Link to="#">Bookmark</Link></span>
+        <span className="my-2 text-lg"><Link to="#">Lists</Link></span>
+        <span className="my-2 text-lg"><Link to="#">Profile</Link></span>
+        <span className="my-2 text-lg"><Link to="#">More</Link></span>
+        <button className="my-2 px-2 w-full rounded-full bg-blue-400 text-white text-lg" onClick={() => setShowModal(!showModal)}>Tweet</button>
       </div>
 
       <div className="fixed flex flex-row bottom-0">
