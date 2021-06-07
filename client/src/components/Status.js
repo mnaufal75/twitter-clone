@@ -21,7 +21,7 @@ const Status = ({ cookies }) => {
   };
 
   return (
-    <div className="container w-1/2 flex flex-col border-r-2 border-l-2 border-gray-400">
+    <div className="container w-1/2 flex flex-col border-r border-l border-gray-400">
       <div className="px-2">
         <div className="flex flex-row pb-2">
           <div>
@@ -54,8 +54,8 @@ const Status = ({ cookies }) => {
       {tweet?.childTweet &&
         tweet.childTweet.map(t => {
           return (
-            <div className="px-2">
-              <div className="flex flex-row p-2 my-2 border-b-2 border-gray-400">
+            <div>
+              <div className="flex flex-row p-2 my-2 border-b border-gray-400">
                 <div className="w-1/6">
                   <div>
                     <img className="shadow-inner rounded-full h-16 w-16" src={'https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo'} />

@@ -16,7 +16,7 @@ import {
 function App({ cookies }) {
   return (
     <Router>
-      <div className="App container h-screen mx-auto px-16 flex">
+      <div className="App container min-h-screen h-auto mx-auto px-16 flex">
         <Switch>
           <Route exact path="/">
             <Redirect to="/home" />
@@ -45,7 +45,6 @@ function App({ cookies }) {
         </Switch>
       </div>
     </Router>
-
   );
 }
 
