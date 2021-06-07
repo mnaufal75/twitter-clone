@@ -1,12 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply, faRetweet } from '@fortawesome/free-solid-svg-icons';
 import ReplyTweetModal from '../modals/ReplyTweetModal';
+import { retweet } from '../modals/RetweetModal';
 
-const Status = ({ cookies }) => {
+const mapStateToProps = (state) => {
+  return {
+    token: state.token,
+  }
+};
+
+const Status = ({ cookies, token }) => {
   const [tweet, setTweet] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalTweet, setModalTweet] = useState('');
@@ -22,6 +30,10 @@ const Status = ({ cookies }) => {
   const handleReply = (tweet) => {
     setModalTweet(tweet);
     setShowModal(true);
+  };
+
+  const handleRetweet = (tweet) => {
+    retweet(token, tweet)
   };
 
   return (
@@ -56,8 +68,7 @@ const Status = ({ cookies }) => {
           <span onClick={() => handleReply(tweet)} className="mx-4">
             <FontAwesomeIcon icon={faReply} />
           </span>
-          {/* <span onClick={handleReply}> */}
-          <span className="mx-4">
+          <span onClick={() => handleRetweet(tweet)} className="mx-4">
             <FontAwesomeIcon icon={faRetweet} />
           </span>
         </div>
@@ -85,8 +96,7 @@ const Status = ({ cookies }) => {
                     <span onClick={() => handleReply(t)} className="mx-4">
                       <FontAwesomeIcon icon={faReply} />
                     </span>
-                    {/* <span onClick={handleReply}> */}
-                    <span className="mx-4">
+                    <span onClick={() => handleRetweet(t)} className="mx-4">
                       <FontAwesomeIcon icon={faRetweet} />
                     </span>
                   </div>
@@ -102,4 +112,4 @@ const Status = ({ cookies }) => {
   )
 }
 
-export default Status;
+export default connect(mapStateToProps)(Status);

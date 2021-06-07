@@ -6,6 +6,7 @@ import { faReply, faRetweet } from '@fortawesome/free-solid-svg-icons';
 import dayjs from 'dayjs';
 
 import ReplyTweetModal from '../modals/ReplyTweetModal';
+import { retweet } from '../modals/RetweetModal';
 import { getTimeline } from '../actions/index';
 
 const mapStateToProps = (state) => {
@@ -29,6 +30,10 @@ const Home = ({ token, timeline, getTimeline }) => {
   const handleReply = (tweet) => {
     setModalTweet(tweet);
     setShowModal(true);
+  };
+
+  const handleRetweet = (tweet) => {
+    retweet(token, tweet);
   };
 
   return (
@@ -57,7 +62,7 @@ const Home = ({ token, timeline, getTimeline }) => {
                   <span onClick={() => handleReply(data)} className="mx-4">
                     <FontAwesomeIcon icon={faReply} />
                   </span>
-                  <span className="mx-4">
+                  <span onClick={() => handleRetweet(data)} className="mx-4">
                     <FontAwesomeIcon icon={faRetweet} />
                   </span>
                 </div>

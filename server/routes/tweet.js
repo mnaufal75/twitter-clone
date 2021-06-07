@@ -38,6 +38,22 @@ router.get('/:username/:tweetId', async (req, res) => {
   res.send(tweet)
 });
 
+router.post('/:tweetId/retweet', passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const user = await User
+      .findOne({
+        username: req.user.username,
+      })
+
+    const tweet = await Tweet
+      .findById(req.params.tweetId);
+
+    user.retweetList.push(tweet);
+    await user.save();
+
+    res.send(tweet);
+  });
+
 router.post('/', passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     const user = await User

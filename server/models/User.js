@@ -29,6 +29,12 @@ const schema = mongoose.Schema({
       ref: "Tweet",
     }
   ],
+  retweetList: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tweet",
+    }
+  ],
 });
 
 module.exports = mongoose.model("User", schema);

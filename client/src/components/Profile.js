@@ -6,12 +6,13 @@ import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply, faRetweet } from '@fortawesome/free-solid-svg-icons';
 import ReplyTweetModal from '../modals/ReplyTweetModal';
+import { retweet } from '../modals/RetweetModal';
 
 const mapStateToProps = (state) => {
-  return { username: state.username };
+  return { token: state.token, username: state.username };
 };
 
-const Profile = ({ cookies, username }) => {
+const Profile = ({ cookies, token, username }) => {
   const [datas, setDatas] = useState([]);
   const [followed, setFollowed] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -36,6 +37,10 @@ const Profile = ({ cookies, username }) => {
   const handleReply = (data) => {
     setShowModal(true);
     setTweet(data);
+  };
+
+  const handleRetweet = (tweet) => {
+    retweet(token, tweet);
   };
 
   const followAccount = async (username) => {
@@ -99,8 +104,7 @@ const Profile = ({ cookies, username }) => {
                 <span onClick={() => handleReply(data)} className="mx-4">
                   <FontAwesomeIcon icon={faReply} />
                 </span>
-                {/* <span onClick={handleReply}> */}
-                <span className="mx-4">
+                <span onClick={() => handleRetweet(data)} className="mx-4">
                   <FontAwesomeIcon icon={faRetweet} />
                 </span>
               </div>
