@@ -45,7 +45,7 @@ const CreateTweetModal = ({ cookies, displayModal, showModal, token, createTweet
         <div className="grid grid-cols-8 mb-16">
           <img
             className="rounded-full shadow-inner m-1 col-span-2"
-            src="https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo" />
+            src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/256/sign-right-icon.png" />
           <textarea type="text" name="tweetText"
             className="w-full h-full p-2 col-span-6 resize-none text-xl" placeholder="What's happening?" onChange={handleInput} value={tweetText}>
           </textarea>

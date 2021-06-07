@@ -48,7 +48,7 @@ const LeftBar = ({ cookies, username, userFullname }) => {
         <div className="flex-0 m-2">
           <img
             className="rounded-full shadow-inner h-16 w-16"
-            src="https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo" />
+            src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/256/sign-right-icon.png" />
         </div>
         <div className="flex-1 m-2">
           <span className="font-bold">

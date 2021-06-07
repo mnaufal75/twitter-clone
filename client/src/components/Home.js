@@ -39,7 +39,8 @@ const Home = ({ token, timeline, getTimeline }) => {
             <div className="flex flex-row p-2 my-2 border-b border-gray-400">
               <div className="w-1/6">
                 <div>
-                  <img className="shadow-inner rounded-full h-16 w-16" src={'https://lh3.googleusercontent.com/ogw/ADGmqu-UDWio0GOwllYgAv_0g3Sx0VOUNox7rC3H1ZBPvA=s83-c-mo'} />
+                  <img className="shadow-inner rounded-full h-16 w-16"
+                    src={'https://icons.iconarchive.com/icons/paomedia/small-n-flat/256/sign-right-icon.png'} />
                 </div>
               </div>
               <div className="w-5/6">
