@@ -1,47 +1,49 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
-const Profile = ({ cookies }) => {
+const mapStateToProps = (state) => {
+  return { username: state.username };
+};
+
+const Profile = ({ cookies, username }) => {
   const [datas, setDatas] = useState([]);
   const [followed, setFollowed] = useState(false);
 
-  const { username } = useParams();
+  const usernameProfile = useParams().username;
 
   useEffect(async () => {
-    const result = await axios(`http://localhost:5000/api/tweet/${username}`);
+    const result = await axios(`http://localhost:5000/api/tweet/${usernameProfile}`);
 
     setDatas(result.data);
   }, [datas]);
 
   useEffect(async () => {
-    const usernameCookie = cookies.get('username');
-
-    const result = await axios(`http://localhost:5000/api/user/${usernameCookie}/follow`);
+    const result = await axios(`http://localhost:5000/api/user/${usernameProfile}/follow`);
     const followingList = result?.data?.following?.filter(f => (f.username === username));
 
     // If followingList.length === 0, it means not followed
     setFollowed(!(followingList.length === 0));
   }, []);
 
-  const followAccount = async (account) => {
-    const usernameCookie = cookies.get('username');
+  const followAccount = async (username) => {
     let query = {}
     if (followed === false) {
       query = {
-        username: usernameCookie,
+        username: username,
         follow: true,
         unfollow: false,
       };
     } else {
       query = {
-        username: usernameCookie,
+        username: username,
         follow: false,
         unfollow: true,
       };
     }
-    await axios.post(`http://localhost:5000/api/user/${account}/follow`, query);
+    await axios.post(`http://localhost:5000/api/user/${username}/follow`, query);
     await setFollowed(!followed);
   };
 
@@ -91,4 +93,4 @@ const Profile = ({ cookies }) => {
   )
 }
 
-export default Profile;
+export default connect(mapStateToProps)(Profile);
