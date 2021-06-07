@@ -25,6 +25,7 @@ const LeftBar = ({ cookies, username, userFullname }) => {
   const history = useHistory();
 
   const handleLogout = () => {
+    cookies.set('token', '', { path: '/' });
     logout();
     history.push('/login');
   };

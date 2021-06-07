@@ -5,7 +5,7 @@ const routes = require('./routes');
 const dotenv = require('dotenv').config();
 const passport = require('passport');
 const session = require('express-session');
-const localStrategy = require('./config/local');
+// const localStrategy = require('./config/local');
 const jwtStrategy = require('./config/jwt');
 
 const app = express();
@@ -21,7 +21,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(localStrategy);
+// passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 app.use("/api", routes);

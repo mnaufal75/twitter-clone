@@ -23,6 +23,10 @@ const rootReducer = (state = initialState, action) => {
       userFullname: action.payload.userFullname,
       timeline: [...action.payload.timeline],
     });
+  } else if (action.type === 'set-token') {
+    return Object.assign({}, state, {
+      token: action.payload,
+    });
   }
 
   return state;

@@ -16,10 +16,9 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const Home = ({ token, timeline, getTimeline }) => {
-
   useEffect(async () => {
     await getTimeline(token);
-  }, []);
+  }, [token]);
 
   return (
     <div className="container w-1/2 flex flex-col border-r border-l border-gray-400">

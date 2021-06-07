@@ -12,8 +12,30 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
 
-function App({ cookies }) {
+import { setToken } from '../src/actions/index';
+
+const mapStateToProps = (state) => {
+  return {
+    token: state.token,
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setToken: (token) => dispatch(setToken(token)),
+  }
+};
+
+const App = ({ cookies, token, setToken }) => {
+  useEffect(() => {
+    const tokenCookies = cookies.get('token') || token;
+    setToken(tokenCookies);
+    cookies.set('token', token, { path: '/' });
+  }, [token]);
+
   return (
     <Router>
       <div className="App container min-h-screen h-auto mx-auto px-16 flex">
@@ -33,7 +55,7 @@ function App({ cookies }) {
             <RightBar />
           </Route>
           <Route path="/:username/status/:tweetId">
-            <LeftBar />
+            <LeftBar cookies={cookies} />
             <Status cookies={cookies} />
             <RightBar />
           </Route>
@@ -48,4 +70,4 @@ function App({ cookies }) {
   );
 }
 
-export default withCookies(App);
+export default connect(mapStateToProps, mapDispatchToProps)(withCookies(App));

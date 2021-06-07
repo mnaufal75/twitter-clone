@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN, LOGOUT, CREATE_TWEET, GET_TIMELINE } from '../constants/action-types';
+import { LOGIN, LOGOUT, CREATE_TWEET, GET_TIMELINE, SET_TOKEN } from '../constants/action-types';
 
 export function login(query) {
   return async function (dispatch) {
@@ -39,5 +39,11 @@ export function getTimeline(token) {
       .then(response => {
         dispatch({ type: GET_TIMELINE, payload: response.data });
       });
+  }
+};
+
+export function setToken(token) {
+  return function (dispatch) {
+    dispatch({ type: SET_TOKEN, payload: token });
   }
 };
