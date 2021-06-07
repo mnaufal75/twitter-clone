@@ -6,7 +6,7 @@ import { createTweet } from '../actions/index';
 
 const mapStateToProps = (state) => {
   return {
-    username: state.username,
+    token: state.token,
   }
 };
 
@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-const ReplyTweetModal = ({ cookies, displayModal, showModal, reply, username, createTweet }) => {
+const ReplyTweetModal = ({ cookies, displayModal, showModal, reply, token, createTweet }) => {
   const [tweetText, setTweetText] = useState('');
 
   const toggleModal = () => {
@@ -29,13 +29,12 @@ const ReplyTweetModal = ({ cookies, displayModal, showModal, reply, username, cr
 
   const publishTweet = async () => {
     const query = {
-      "username": username,
       "tweetText": tweetText,
       "parentTweet": reply._id,
     };
     setTweetText('');
     showModal(!displayModal);
-    await createTweet(query);
+    await createTweet({ token, query });
   };
 
   return (

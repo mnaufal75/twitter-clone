@@ -38,44 +38,44 @@ router.get('/:username/:tweetId', async (req, res) => {
   res.send(tweet)
 });
 
-router.post('/', async (req, res) => {
-  const user = await User
-    .findOne({
-      username: req.body.username,
-    })
+router.post('/', passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const user = await User
+      .findOne({
+        username: req.user.username,
+      })
 
-  const tweet = new Tweet({
-    userId: user._id,
-    username: user.username,
-    userFullname: user.userFullname,
-    date: Date.now(),
-    tweetText: req.body.tweetText,
-    parentTweet: req.body.parentTweet,
-  });
-
-  user.followers.map(async f => {
-    const follower = await User
-      .findById(String(f._id));
-    console.log(follower);
-    await follower.timeline.push(tweet);
-    await follower.save();
-  });
-
-  await user.tweets.push(tweet);
-  await user.timeline.push(tweet);
-  await user.save();
-  await tweet.save();
-
-  const parentTweet = await Tweet
-    .findOne({
-      _id: req.body.parentTweet,
+    const tweet = new Tweet({
+      userId: user._id,
+      username: user.username,
+      userFullname: user.userFullname,
+      date: Date.now(),
+      tweetText: req.body.tweetText,
+      parentTweet: req.body.parentTweet,
     });
-  if (parentTweet !== null) {
-    await parentTweet.childTweet.push(tweet);
-    await parentTweet.save();
-  }
 
-  res.send(tweet);
-});
+    user.followers.map(async f => {
+      const follower = await User
+        .findById(String(f._id));
+      await follower.timeline.push(tweet);
+      await follower.save();
+    });
+
+    await user.tweets.push(tweet);
+    await user.timeline.push(tweet);
+    await user.save();
+    await tweet.save();
+
+    const parentTweet = await Tweet
+      .findOne({
+        _id: req.body.parentTweet,
+      });
+    if (parentTweet !== null) {
+      await parentTweet.childTweet.push(tweet);
+      await parentTweet.save();
+    }
+
+    res.send(tweet);
+  });
 
 module.exports = router;

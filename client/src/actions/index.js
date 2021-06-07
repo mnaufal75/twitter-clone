@@ -16,9 +16,13 @@ export function logout() {
   }
 };
 
-export function createTweet(query) {
+export function createTweet({ token, query }) {
   return async function (dispatch) {
-    return axios.post('http://localhost:5000/api/tweet', query)
+    return axios.post('http://localhost:5000/api/tweet', query, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
       .then(() => {
         dispatch({ type: CREATE_TWEET });
       });
