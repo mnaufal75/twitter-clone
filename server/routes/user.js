@@ -4,6 +4,20 @@ const passport = require('passport');
 
 const User = require('../models/User');
 
+router.get('/', passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const user = await User
+      .findOne({
+        username: req.user.username,
+      })
+      .populate("timeline")
+      .populate("tweets")
+      .populate("followers")
+      .populate("following");
+
+    res.send(user);
+  });
+
 router.post('/:username/follow', passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     const follower = await User

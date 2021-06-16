@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN, LOGOUT, CREATE_TWEET, GET_TIMELINE, SET_TOKEN } from '../constants/action-types';
+import { LOGIN, LOGOUT, CREATE_TWEET, GET_USER_DATA, GET_TIMELINE, SET_TOKEN } from '../constants/action-types';
 
 export function login(query) {
   return async function (dispatch) {
@@ -25,6 +25,20 @@ export function createTweet({ token, query }) {
     })
       .then(() => {
         dispatch({ type: CREATE_TWEET });
+      });
+  }
+};
+
+export function getUserData(token) {
+  return async function (dispatch) {
+    return axios('http://localhost:5000/api/user', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        console.log(response.data);
+        dispatch({ type: GET_USER_DATA, payload: response.data });
       });
   }
 };
