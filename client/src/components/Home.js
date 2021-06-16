@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,25 +7,14 @@ import dayjs from 'dayjs';
 
 import ReplyTweetModal from '../modals/ReplyTweetModal';
 import { retweet } from '../modals/RetweetModal';
-import { getTimeline } from '../actions/index';
 
 const mapStateToProps = (state) => {
   return { token: state.token, timeline: state.timeline };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getTimeline: (token) => dispatch(getTimeline(token)),
-  }
-};
-
-const Home = ({ token, timeline, getTimeline }) => {
+const Home = ({ token, timeline }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalTweet, setModalTweet] = useState('');
-
-  useEffect(async () => {
-    await getTimeline(token);
-  }, [token]);
 
   const handleReply = (tweet) => {
     setModalTweet(tweet);
@@ -77,4 +66,4 @@ const Home = ({ token, timeline, getTimeline }) => {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);
