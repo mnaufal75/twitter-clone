@@ -20,19 +20,22 @@ const Profile = ({ cookies, token, username }) => {
 
   const usernameProfile = useParams().username;
 
-  useEffect(async () => {
-    const result = await axios(`http://localhost:5000/api/tweet/${usernameProfile}`);
-
-    setDatas(result.data);
+  useEffect(() => {
+    (async () => {
+      const result = await axios(`http://localhost:5000/api/tweet/${usernameProfile}`);
+      setDatas(result.data);
+    })();
   }, [datas]);
 
-  useEffect(async () => {
-    const result = await axios(`http://localhost:5000/api/user/${usernameProfile}/follow`);
-    const followingList = result?.data?.following?.filter(f => (f.username === username));
+  useEffect(() => {
+    (async () => {
+      const result = await axios(`http://localhost:5000/api/user/${usernameProfile}/follow`);
+      const followingList = result?.data?.followers?.filter(f => (f.username === username));
 
-    // If followingList.length === 0, it means not followed
-    setFollowed(!(followingList.length === 0));
-  }, []);
+      // If followingList.length === 0, it means not followed
+      setFollowed(!(followingList.length === 0));
+    })();
+  }, [username]);
 
   const handleReply = (data) => {
     setShowModal(true);
@@ -58,8 +61,12 @@ const Profile = ({ cookies, token, username }) => {
         unfollow: true,
       };
     }
-    await axios.post(`http://localhost:5000/api/user/${username}/follow`, query);
-    await setFollowed(!followed);
+    await axios.post(`http://localhost:5000/api/user/${username}/follow`, query, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    setFollowed(!followed);
   };
 
   return (
@@ -72,10 +79,13 @@ const Profile = ({ cookies, token, username }) => {
         <br />
         <div className="flex justify-between">
           <span>@{datas.username}</span>
-          <button
-            className="m-2 p-2 rounded-full bg-blue-400 text-white text-lg"
-            onClick={() => followAccount(datas.username)}>{followed ? "Unfollow" : "Follow"}
-          </button>
+          {
+            username !== usernameProfile &&
+            <button
+              className="m-2 p-2 rounded-full bg-blue-400 text-white text-lg"
+              onClick={() => followAccount(datas.username)}>{followed ? "Unfollow" : "Follow"}
+            </button>
+          }
         </div>
         <span>Joined August 2011</span>
         <br />
