@@ -34,6 +34,11 @@ describe('Auth test', () => {
       user.save();
     });
 
+    afterAll(async () => {
+      await User.findOneAndDelete({ username: 'test' });
+      await User.findOneAndDelete({ username: 'test2' });
+    });
+
     test('reject signup if username is already in DB', async () => {
       await request(app)
         .post('/api/auth/signup')
@@ -71,6 +76,10 @@ describe('Auth test', () => {
         userFullname: 'Test'
       });
       user.save();
+    });
+
+    afterAll(async () => {
+      await User.findOneAndDelete({ username: 'test' });
     });
 
     test('reject login if username is not in DB', async () => {

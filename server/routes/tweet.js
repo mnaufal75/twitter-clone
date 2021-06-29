@@ -16,15 +16,15 @@ router.get('/timeline/', passport.authenticate('jwt', { session: false }),
     res.send(user);
   });
 
-router.get('/:username', async (req, res) => {
-  const user = await User
-    .findOne({
-      username: req.params.username,
-    })
-    .populate("tweets")
-    .sort({ "_id": -1 });
-  res.send(user);
-});
+// router.get('/:username', async (req, res) => {
+//   const user = await User
+//     .findOne({
+//       username: req.params.username,
+//     })
+//     .populate("tweets")
+//     .sort({ "_id": -1 });
+//   res.send(user);
+// });
 
 router.get('/:username/:tweetId', async (req, res) => {
   const tweet = await Tweet

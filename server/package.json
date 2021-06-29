@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "jest --coverage --verbose"
+    "test": "jest --coverage --verbose --runInBand"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -21,6 +21,7 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.23",
     "jest": "^27.0.4",
     "supertest": "^6.1.3"
   }
