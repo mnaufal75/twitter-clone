@@ -1,40 +1,16 @@
-const express = require('express');
-const cors = require('cors');
 const mongoose = require('mongoose');
-const routes = require('./routes');
-const dotenv = require('dotenv').config();
-const passport = require('passport');
-const session = require('express-session');
-// const localStrategy = require('./config/local');
-const jwtStrategy = require('./config/jwt');
 
-const app = express();
+const app = require('./app');
 
-app.use(cors());
-app.use(express.json());
-app.use(
-  session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true,
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-// passport.use(localStrategy);
-passport.use(jwtStrategy);
+const connect = async (url) => {
+  return mongoose.connect(url,
+    { useNewUrlParser: true, useUnifiedTopology: true });
+};
 
-app.use("/api", routes);
+if (require.main === module) {
+  app.listen(process.env.PORT, () => console.log('Connected to server'));
+  connect(process.env.MONGODB_URI);
+  mongoose.connection.on('error', console.log);
+};
 
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(async () => {
-    app.listen(process.env.PORT, () => {
-      console.log("Starting server");
-    });
-  })
-
-
+module.exports = { connect };
