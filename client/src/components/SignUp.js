@@ -1,7 +1,15 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 
-const SignUp = () => {
+import { signup } from '../actions/index';
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signup: (query) => dispatch(signup(query)),
+  }
+};
+
+const SignUp = ({ signup }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [userFullname, setUserFullname] = useState('');
@@ -22,7 +30,7 @@ const SignUp = () => {
     setUsername('');
     setPassword('');
     setUserFullname('');
-    await axios.post('http://localhost:5000/api/auth/signup', query);
+    signup(query);
   };
 
   return (
@@ -42,4 +50,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp;
+export default connect(null, mapDispatchToProps)(SignUp);

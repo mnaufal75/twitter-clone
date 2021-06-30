@@ -9,7 +9,10 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-  if (action.type === 'LOGIN') {
+  if (action.type === 'SIGNUP') {
+    return Object.assign({}, state, {
+    });
+  } else if (action.type === 'LOGIN') {
     return Object.assign({}, state, {
       token: action.payload,
     });

@@ -1,5 +1,14 @@
 import axios from 'axios';
-import { LOGIN, LOGOUT, CREATE_TWEET, GET_USER_DATA, GET_TIMELINE, SET_TOKEN } from '../constants/action-types';
+import { SIGNUP, LOGIN, LOGOUT, CREATE_TWEET, GET_USER_DATA, GET_TIMELINE, SET_TOKEN } from '../constants/action-types';
+
+export function signup(query) {
+  return async function (dispatch) {
+    return axios.post('http://localhost:5000/api/auth/signup', query)
+      .then(response => {
+        dispatch({ type: SIGNUP, payload: response.data });
+      });
+  }
+};
 
 export function login(query) {
   return async function (dispatch) {
