@@ -1,8 +1,8 @@
-export const LOGIN = 'login';
-export const LOGOUT = 'logout';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
 
-export const CREATE_TWEET = 'create-tweet';
-export const GET_USER_DATA = 'get-user-data';
-export const GET_TIMELINE = 'get-timeline';
+export const CREATE_TWEET = 'CREATE_TWEET';
+export const GET_USER_DATA = 'GET_USER_DATA';
+export const GET_TIMELINE = 'GET_TIMELINE';
 
-export const SET_TOKEN = 'set-token';
+export const SET_TOKEN = 'SET_TOKEN';

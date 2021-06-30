@@ -9,18 +9,18 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-  if (action.type === 'login') {
+  if (action.type === 'LOGIN') {
     return Object.assign({}, state, {
       token: action.payload,
     });
-  } else if (action.type === 'logout') {
+  } else if (action.type === 'LOGOUT') {
     return Object.assign({}, state, {
       token: '',
     });
-  } else if (action.type === 'create-tweet') {
+  } else if (action.type === 'CREATE_TWEET') {
     return Object.assign({}, state, {
     });
-  } else if (action.type === 'get-user-data') {
+  } else if (action.type === 'GET_USER_DATA') {
     return Object.assign({}, state, {
       username: action.payload.username,
       userFullname: action.payload.userFullname,
@@ -29,13 +29,13 @@ const rootReducer = (state = initialState, action) => {
       followers: [...action.payload.followers],
       following: [...action.payload.following],
     });
-  } else if (action.type === 'get-timeline') {
+  } else if (action.type === 'GET_TIMELINE') {
     return Object.assign({}, state, {
       username: action.payload.username,
       userFullname: action.payload.userFullname,
       timeline: [...action.payload.timeline],
     });
-  } else if (action.type === 'set-token') {
+  } else if (action.type === 'SET_TOKEN') {
     return Object.assign({}, state, {
       token: action.payload,
     });
