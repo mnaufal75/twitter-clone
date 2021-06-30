@@ -13,18 +13,20 @@ router.get('/timeline/', passport.authenticate('jwt', { session: false }),
       })
       .populate("timeline");
 
-    res.send(user);
+    const { username, userFullname, timeline } = user;
+    res.send({ username, userFullname, timeline });
   });
 
-// router.get('/:username', async (req, res) => {
-//   const user = await User
-//     .findOne({
-//       username: req.params.username,
-//     })
-//     .populate("tweets")
-//     .sort({ "_id": -1 });
-//   res.send(user);
-// });
+router.get('/:username', async (req, res) => {
+  const user = await User
+    .findOne({
+      username: req.params.username,
+    })
+    .populate("tweets")
+    .sort({ "_id": -1 });
+  const { username, userFullname, tweets } = user;
+  res.send({ username, userFullname, tweets });
+});
 
 router.get('/:username/:tweetId', async (req, res) => {
   const tweet = await Tweet

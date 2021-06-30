@@ -15,7 +15,8 @@ router.get('/', passport.authenticate('jwt', { session: false }),
       .populate("followers")
       .populate("following");
 
-    res.send(user);
+    const { tweets, timeline, followers, following, retweetList, username, userFullname } = user;
+    res.send({ tweets, timeline, followers, following, retweetList, username, userFullname });
   });
 
 router.post('/:username/follow', passport.authenticate('jwt', { session: false }),
@@ -50,7 +51,8 @@ router.post('/:username/follow', passport.authenticate('jwt', { session: false }
     await follower.save();
     await followed.save();
 
-    res.send(followed);
+    const { username, userFullname } = followed;
+    res.send({ username, userFullname });
   });
 
 router.get('/:username/follow', async (req, res) => {
@@ -61,7 +63,8 @@ router.get('/:username/follow', async (req, res) => {
     .populate("followers")
     .populate("following");
 
-  res.send({ followers: user.followers, following: user.following });
+  const { username, userFullname, followers, following } = user;
+  res.send({ username, userFullname, followers, following });
 });
 
 module.exports = router;
