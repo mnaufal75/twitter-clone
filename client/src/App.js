@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import {
@@ -35,17 +35,25 @@ const mapDispatchToProps = (dispatch) => {
 const App = ({ cookies, token, setToken, getUserData }) => {
   useEffect(() => {
     (async () => {
-      const tokenCookies = cookies.get("token") || token;
-      setToken(tokenCookies);
-      cookies.set("token", token, { path: "/" });
+      try {
+        const tokenCookies = cookies.get("token") || token;
+        if (Object.keys(tokenCookies).length !== 0) {
+          setToken(tokenCookies);
+          cookies.set("token", token, { path: "/" });
+        }
+      } catch (err) {
+        console.log(err);
+      }
     })();
   }, [token]);
 
   useEffect(() => {
-    (async () => {
-      await getUserData(token);
-    })();
-  }, [token, getUserData]);
+    if (Object.keys(token).length !== 0) {
+      (async () => {
+        await getUserData(token);
+      })();
+    }
+  }, [token]);
 
   return (
     <Router>
@@ -54,16 +62,16 @@ const App = ({ cookies, token, setToken, getUserData }) => {
           <Route exact path="/">
             <Redirect to="/login" />
           </Route>
+          <Route exact path="/home">
+            <LeftBar cookies={cookies} />
+            <Home cookies={cookies} />
+            <RightBar />
+          </Route>
           <Route path="/login">
             <Login cookies={cookies} />
           </Route>
           <Route path="/signup">
             <SignUp />
-          </Route>
-          <Route exact path="/home">
-            <LeftBar cookies={cookies} />
-            <Home cookies={cookies} />
-            <RightBar />
           </Route>
           <Route path="/:username/status/:tweetId">
             <LeftBar cookies={cookies} />
