@@ -5,6 +5,9 @@ import { connect } from "react-redux";
 
 import CreateTweetModal from "../modals/CreateTweetModal";
 import { logout } from "../actions/index";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 const mapStateToProps = (state) => {
   return {
@@ -39,8 +42,10 @@ const LeftBar = ({ cookies, username, userFullname, logout }) => {
   return (
     <div className="container w-1/4 h-screen flex flex-col justify-between pl-16 pr-4">
       <div>
-        <div className="twitter-icon">
-          <image src="rounded-radius" />
+        <div className="twitter-icon py-4">
+          <span className="mx-4 cursor-pointer text-3xl">
+            <FontAwesomeIcon icon={faTwitter} />
+          </span>
         </div>
 
         <div className="top-0 flex flex-col">
@@ -72,17 +77,18 @@ const LeftBar = ({ cookies, username, userFullname, logout }) => {
             className="my-2 px-4 py-2 w-full rounded-full bg-blue-400 text-white text-lg"
             onClick={() => setShowModal(!showModal)}
           >
-            Tweet
+            Post
           </button>
         </div>
       </div>
 
       <div className="flex flex-row">
         <div className="flex-0 m-2">
-          <img
-            className="rounded-full shadow-inner h-16 w-16"
-            src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/256/sign-right-icon.png"
-          />
+          <div>
+            <span className="text-6xl h-16 w-16">
+              <FontAwesomeIcon icon={faUserCircle} />
+            </span>
+          </div>
         </div>
         <div className="flex-1 m-2">
           <span className="font-bold">

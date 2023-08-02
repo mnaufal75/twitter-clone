@@ -28,7 +28,7 @@ const RigthBar = () => {
           {listOfSuggestion.map((item) => {
             return (
               <Link>
-                <div className="flex justify-between p-4">
+                <div key={item.username} className="flex justify-between p-4">
                   <div className="flex flex-col">
                     <span>{item.name}</span>
                     <span className="text-gray-500">@{item.username}</span>
