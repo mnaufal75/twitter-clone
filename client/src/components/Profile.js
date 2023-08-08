@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { connect } from "react-redux";
-import axios from "axios";
-import dayjs from "dayjs";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faBell,
+  faCalendar,
   faChartBar,
+  faEllipsisH,
   faHeartbeat,
   faReply,
   faRetweet,
   faShare,
-  faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import ReplyTweetModal from "../modals/ReplyTweetModal";
 import { retweet } from "../modals/RetweetModal";
 
@@ -88,31 +90,86 @@ const Profile = ({ cookies, token, username }) => {
 
   return (
     <div className="container w-1/2 h-auto flex flex-col border-r border-l border-gray-400">
-      <div className="px-2 py-32">
-        <span className="text-6xl h-16 w-16">
-          <FontAwesomeIcon icon={faUserCircle} />
-        </span>
+      <div className="home__header">
+        <div className="home__banner bg-gray-300 h-48 w-full"></div>
 
-        <span className="font-bold">{datas.userFullname}</span>
-        <br />
-        <div className="flex justify-between">
-          <span>@{datas.username}</span>
-          {username !== usernameProfile && (
-            <button
-              className="m-2 p-2 rounded-full bg-blue-400 text-white text-lg"
-              onClick={() => followAccount(datas.username)}
-            >
-              {followed ? "Unfollow" : "Follow"}
-            </button>
-          )}
+        <div className="p-4">
+          <div className="flex flex-row items-end justify-between h-12 mb-4">
+            <div>
+              <img
+                className="rounded-full"
+                src="https://pbs.twimg.com/profile_images/1585133755185778689/y09UYQFQ_400x400.jpg"
+                height={"120px"}
+                width={"120px"}
+                alt="profile"
+              />
+            </div>
+
+            <div className="home__button flex flex-row">
+              {username !== usernameProfile && (
+                <>
+                  <span className="rounded-full border-2 w-10 h-10 flex justify-center items-center mr-2">
+                    <FontAwesomeIcon icon={faEllipsisH} />
+                  </span>
+                  <span className="rounded-full border-2 w-10 h-10 flex justify-center items-center mr-2">
+                    <FontAwesomeIcon icon={faRetweet} />
+                  </span>
+                  <span className="rounded-full border-2 w-10 h-10 flex justify-center items-center mr-2">
+                    <FontAwesomeIcon icon={faBell} />
+                  </span>
+                  <button
+                    className={`rounded-3xl border-2 h-10 p-2 flex justify-center items-center font-bold ${
+                      followed
+                        ? "bg-white text-blue-400"
+                        : "bg-blue-400 text-white border-blue-400"
+                    }`}
+                    onClick={() => followAccount(datas.username)}
+                  >
+                    {followed ? "Following" : "Follow"}
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+
+          <div className="home__description">
+            <div className="mb-4">
+              <div className="home__userFullname font-bold text-2xl">
+                {datas.userFullname}
+              </div>
+              <div className="home__username text-gray-500">
+                @{datas.username}
+              </div>
+            </div>
+
+            <div className="home__description-detail mb-4">
+              BOOM Esports's Official Twitter Account! Home of DOTA2, VALORANT
+              and PUBGM teams. Inquiries/Contact: business@boomesports.gg
+            </div>
+
+            <div className="home__joined-date mb-4">
+              <span>
+                <FontAwesomeIcon icon={faCalendar} />
+              </span>
+              <span className="text-gray-500">{` Joined May 2017`}</span>
+            </div>
+
+            <div className="home__follow-count">
+              <span className="mr-4">
+                {/* <span className="font-bold">{datas?.following?.length}</span>{" "} */}
+                <span className="font-bold">352</span>{" "}
+                <span className="text-gray-500">Following</span>
+              </span>
+              <span>
+                {/* <span className="font-bold">{datas?.followers?.length}</span>{" "} */}
+                <span className="font-bold">77.4K</span>{" "}
+                <span className="text-gray-500">Followers</span>
+              </span>
+            </div>
+          </div>
         </div>
-        <span>Joined August 2011</span>
-        <br />
-        <span>
-          {datas?.following?.length} Following {datas?.followers?.length}{" "}
-          Follower
-        </span>
       </div>
+
       {datas?.tweets?.map((data) => {
         return (
           <div className="flex flex-row p-2 my-2 border-b border-gray-400">
