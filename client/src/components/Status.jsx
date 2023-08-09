@@ -54,7 +54,10 @@ const Status = ({ cookies, token }) => {
   };
 
   return (
-    <div className="status container w-1/2 flex flex-col border-r border-l border-gray-200">
+    <div
+      className="status container flex flex-col border-r border-l border-gray-200"
+      style={{ width: "600px" }}
+    >
       <div className="status__title font-bold text-xl p-4">
         <span className="cursor-pointer mr-4" onClick={history.goBack}>
           <FontAwesomeIcon icon={faArrowLeft} />

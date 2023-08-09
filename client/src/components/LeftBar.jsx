@@ -54,7 +54,10 @@ const LeftBar = ({ cookies, username, userFullname, logout }) => {
   };
 
   return (
-    <div className="left-bar container w-1/4 h-screen flex flex-col justify-between pl-16 pr-4">
+    <div
+      className="left-bar container h-screen flex flex-col justify-between pl-16 pr-4"
+      style={{ width: "320px" }}
+    >
       <div>
         <div className="left-bar__icon twitter-icon py-4">
           <span className="mx-4 cursor-pointer text-3xl">

@@ -17,7 +17,7 @@ const RigthBar = () => {
   ];
 
   return (
-    <div className="right-bar container w-1/3">
+    <div className="right-bar container" style={{ width: "370px" }}>
       <div className="right-bar__suggestion-box rounded-lg m-4 p-4 bg-gray-100">
         <div className="mb-4">
           <span className="right-bar__title text-2xl mb-4 font-bold">

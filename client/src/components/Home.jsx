@@ -23,7 +23,10 @@ const Home = ({ token, timeline }) => {
   };
 
   return (
-    <div className="home container w-1/2 flex flex-col border-r border-l border-gray-200">
+    <div
+      className="home container flex flex-col border-r border-l border-gray-200"
+      style={{ width: "600px" }}
+    >
       <div className="home__title font-bold text-xl p-4">Home</div>
 
       <div>

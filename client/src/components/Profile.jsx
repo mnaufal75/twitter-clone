@@ -88,7 +88,10 @@ const Profile = ({ cookies, token, username }) => {
   };
 
   return (
-    <div className="home container w-1/2 h-auto flex flex-col border-r border-l border-gray-200">
+    <div
+      className="home container w-1/2 h-auto flex flex-col border-r border-l border-gray-200"
+      style={{ width: "600px" }}
+    >
       <div className="home__title font-bold text-xl p-4">
         <span className="cursor-pointer mr-4" onClick={history.goBack}>
           <FontAwesomeIcon icon={faArrowLeft} />
