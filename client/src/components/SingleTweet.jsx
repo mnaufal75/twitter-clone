@@ -24,7 +24,7 @@ const SingleTweet = ({
 }) => {
   return (
     <div className="flex flex-row p-2 my-2 border-b border-gray-200 w-full">
-      <div className="pr-4">
+      <div className="mr-4">
         <span className="text-3xl h-16 w-16">
           <FontAwesomeIcon icon={faUserCircle} />
         </span>
