@@ -135,27 +135,23 @@ const LeftBar = ({ cookies, username, userFullname, logout }) => {
         </div>
       </div>
 
-      <div className="flex flex-row">
-        <div className="flex-0 m-2">
-          <div>
-            <span className="text-6xl h-16 w-16">
+      <div className="left-bar__profile flex p-2 justify-between items-center">
+        <div className="flex">
+          <div className="mr-4">
+            <span className="text-5xl h-16 w-16">
               <FontAwesomeIcon icon={faUserCircle} />
             </span>
           </div>
+          <div className="flex flex-col">
+            <span className="font-bold">
+              <Link to={`/${username}`}>{userFullname}</Link>
+            </span>
+            <span className="text-gray-500">@{username}</span>
+          </div>
         </div>
-        <div className="flex-1 m-2">
-          <span className="font-bold">
-            <Link to={`/${username}`}>{userFullname} </Link>
-          </span>
-          <br />
-          <span className="">@{username}</span>
-          <br />
-          <button
-            className="mt-4 p-2 rounded-full bg-blue-400 text-white text-lg"
-            onClick={handleLogout}
-          >
-            LOGOUT
-          </button>
+
+        <div className="cursor-pointer" onClick={handleLogout}>
+          <FontAwesomeIcon icon={faEllipsis} />
         </div>
       </div>
 
