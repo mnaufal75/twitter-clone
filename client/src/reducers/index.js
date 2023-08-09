@@ -12,12 +12,15 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   if (action.type === "SIGNUP") {
-    return Object.assign({}, state, {});
+    return Object.assign({}, state, {
+      signupError: {},
+    });
   } else if (action.type === "SIGNUP_ERROR") {
     return { ...initialState, signupError: action.payload };
   } else if (action.type === "LOGIN") {
     return Object.assign({}, state, {
       token: action.payload,
+      loginError: {},
     });
   } else if (action.type === "LOGIN_ERROR") {
     return { ...initialState, loginError: action.payload };

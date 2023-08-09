@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
 import { login } from "../actions/index";
 
@@ -18,6 +18,7 @@ const mapDispatchToProps = (dispatch) => {
 const Login = ({ token, loginError, login }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
 
@@ -32,8 +33,11 @@ const Login = ({ token, loginError, login }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setIsLoading(true);
     const query = { username, password };
     await login(query);
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -78,12 +82,13 @@ const Login = ({ token, loginError, login }) => {
             </span>
           </div>
           <div>
-            <input
+            <button
               className="w-full p-2 my-2 border border-blue-400 bg-blue-400 hover:bg-blue-500 text-white transition"
               type="submit"
-              value="Log in"
               onClick={handleSubmit}
-            ></input>
+            >
+              {isLoading ? "Loading" : "Log in"}
+            </button>
           </div>
         </form>
 

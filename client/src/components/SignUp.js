@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
 import { signup } from "../actions/index";
 
@@ -20,6 +20,7 @@ const SignUp = ({ signup, signupError }) => {
   const [password, setPassword] = useState("");
   const [userFullname, setUserFullname] = useState("");
   const [hasSubmit, setHasSubmit] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
 
@@ -36,17 +37,21 @@ const SignUp = ({ signup, signupError }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setIsLoading(true);
     const query = { username, password, userFullname };
     await signup(query);
 
     setHasSubmit(true);
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    if (hasSubmit && Object.keys(signupError).length !== 0) {
+    console.log(hasSubmit);
+    console.log(JSON.stringify(signupError));
+    if (hasSubmit && Object.keys(signupError).length === 0) {
       history.push("/login");
     }
-  }, [signupError]);
+  }, [hasSubmit, signupError]);
 
   return (
     <div className="container h-full flex flex-col">
@@ -95,16 +100,17 @@ const SignUp = ({ signup, signupError }) => {
           </div>
           <div>
             <span className="login-form__error-message text-red-400">
-              {signupError?.data}
+              {JSON.stringify(signupError?.data)}
             </span>
           </div>
           <div>
-            <input
+            <button
               className="w-full p-2 my-2 border border-blue-400 bg-blue-400 hover:bg-blue-500 text-white transition"
               type="submit"
-              value="Sign Up"
               onClick={handleSubmit}
-            ></input>
+            >
+              {isLoading ? "Loading" : "Sign Up"}
+            </button>
           </div>
         </form>
 
