@@ -74,7 +74,9 @@ const Home = ({ token, timeline, createTweet }) => {
 
           <div className="self-end">
             <button
-              className="my-2 px-4 py-2 w-full rounded-full bg-blue-400 text-white text-base"
+              className={`my-2 px-4 py-2 w-full rounded-full text-white text-base ${
+                tweetText.length === 0 ? "disabled bg-blue-100" : "bg-blue-400"
+              }`}
               onClick={handleTweet}
             >
               Post
