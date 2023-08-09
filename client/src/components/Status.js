@@ -29,12 +29,15 @@ const Status = ({ cookies, token }) => {
 
   const { username, tweetId } = useParams();
 
-  useEffect(async () => {
-    const result = await axios(
-      `http://localhost:5000/api/tweet/${username}/${tweetId}`
-    );
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios(
+        `http://localhost:5000/api/tweet/${username}/${tweetId}`
+      );
 
-    setTweet(result.data);
+      setTweet(result.data);
+    }
+    fetchData();
   }, []);
 
   const handleReply = (tweet) => {

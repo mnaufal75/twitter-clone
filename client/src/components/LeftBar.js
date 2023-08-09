@@ -1,13 +1,13 @@
 import { useState } from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
-import CreateTweetModal from "../modals/CreateTweetModal";
-import { logout } from "../actions/index";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { logout } from "../actions/index";
+import CreateTweetModal from "../modals/CreateTweetModal";
 
 const mapStateToProps = (state) => {
   return {

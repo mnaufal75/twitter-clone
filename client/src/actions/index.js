@@ -1,14 +1,14 @@
 import axios from "axios";
 import {
-  SIGNUP,
-  SIGNUP_ERROR,
+  CREATE_TWEET,
+  GET_TIMELINE,
+  GET_USER_DATA,
   LOGIN,
   LOGIN_ERROR,
   LOGOUT,
-  CREATE_TWEET,
-  GET_USER_DATA,
-  GET_TIMELINE,
   SET_TOKEN,
+  SIGNUP,
+  SIGNUP_ERROR,
 } from "../constants/action-types";
 
 export function signup(query) {

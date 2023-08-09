@@ -4,6 +4,7 @@ import Login from "./Login";
 import Profile from "./Profile";
 import RightBar from "./RightBar";
 import SignUp from "./SignUp";
+import SingleTweet from "./SingleTweet";
 import Status from "./Status";
 
-export { Login, SignUp, LeftBar, RightBar, Status, Profile, Home };
+export { Home, LeftBar, Login, Profile, RightBar, SignUp, SingleTweet, Status };
