@@ -4,7 +4,21 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBell,
+  faBookmark,
+  faMessage,
+  faUser,
+} from "@fortawesome/free-regular-svg-icons";
+import {
+  faCheck,
+  faEllipsis,
+  faHome,
+  faList,
+  faMagnifyingGlass,
+  faUserCircle,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { logout } from "../actions/index";
 import CreateTweetModal from "../modals/CreateTweetModal";
@@ -40,39 +54,75 @@ const LeftBar = ({ cookies, username, userFullname, logout }) => {
   };
 
   return (
-    <div className="container w-1/4 h-screen flex flex-col justify-between pl-16 pr-4">
+    <div className="left-bar container w-1/4 h-screen flex flex-col justify-between pl-16 pr-4">
       <div>
-        <div className="twitter-icon py-4">
+        <div className="left-bar__icon twitter-icon py-4">
           <span className="mx-4 cursor-pointer text-3xl">
             <FontAwesomeIcon icon={faTwitter} />
           </span>
         </div>
 
-        <div className="top-0 flex flex-col">
-          <span className="my-2 text-lg">
-            <Link to="/home">Home</Link>
-          </span>
-          <span className="my-2 text-lg">
-            <Link to="#">Explore</Link>
-          </span>
-          <span className="my-2 text-lg">
-            <Link to="#">Notifications</Link>
-          </span>
-          <span className="my-2 text-lg">
-            <Link to="#">Messages</Link>
-          </span>
-          <span className="my-2 text-lg">
-            <Link to="#">Bookmark</Link>
-          </span>
-          <span className="my-2 text-lg">
-            <Link to="#">Lists</Link>
-          </span>
-          <span className="my-2 text-lg">
-            <Link to="#">Profile</Link>
-          </span>
-          <span className="my-2 text-lg">
-            <Link to="#">More</Link>
-          </span>
+        <div className="left-bar__navigation flex flex-col">
+          <div className="my-2 p-2">
+            <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
+              <FontAwesomeIcon icon={faHome} className="mr-4" />
+              <Link to="/home">Home</Link>
+            </span>
+          </div>
+          <div className="my-2 p-2">
+            <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
+              <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-4" />
+              <Link to="#">Explore</Link>
+            </span>
+          </div>
+          <div className="my-2 p-2">
+            <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
+              <FontAwesomeIcon icon={faBell} className="mr-4" />
+              <Link to="#">Notifications</Link>
+            </span>
+          </div>
+          <div className="my-2 p-2">
+            <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
+              <FontAwesomeIcon icon={faMessage} className="mr-4" />
+              <Link to="#">Messages</Link>
+            </span>
+          </div>
+          <div className="my-2 p-2">
+            <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
+              <FontAwesomeIcon icon={faList} className="mr-4" />
+              <Link to="#">Lists</Link>
+            </span>
+          </div>
+          <div className="my-2 p-2">
+            <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
+              <FontAwesomeIcon icon={faUsers} className="mr-4 text-sm" />
+              <Link to="#">Bookmark</Link>
+            </span>
+          </div>
+          <div className="my-2 p-2">
+            <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
+              <FontAwesomeIcon icon={faBookmark} className="mr-4" />
+              <Link to="#">Communities</Link>
+            </span>
+          </div>
+          <div className="my-2 p-2">
+            <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
+              <FontAwesomeIcon icon={faCheck} className="mr-4" />
+              <Link to="#">Verified</Link>
+            </span>
+          </div>
+          <div className="my-2 p-2">
+            <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
+              <FontAwesomeIcon icon={faUser} className="mr-4" />
+              <Link to="#">Profile</Link>
+            </span>
+          </div>
+          <div className="my-2 p-2">
+            <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
+              <FontAwesomeIcon icon={faEllipsis} className="mr-4" />
+              <Link to="#">More</Link>
+            </span>
+          </div>
           <button
             className="my-2 px-4 py-2 w-full rounded-full bg-blue-400 text-white text-lg"
             onClick={() => setShowModal(!showModal)}
