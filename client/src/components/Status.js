@@ -1,28 +1,38 @@
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { connect } from 'react-redux';
-import axios from 'axios';
-import dayjs from 'dayjs';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReply, faRetweet } from '@fortawesome/free-solid-svg-icons';
-import ReplyTweetModal from '../modals/ReplyTweetModal';
-import { retweet } from '../modals/RetweetModal';
+import {
+  faChartBar,
+  faHeartbeat,
+  faReply,
+  faRetweet,
+  faShare,
+  faUserCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import ReplyTweetModal from "../modals/ReplyTweetModal";
+import { retweet } from "../modals/RetweetModal";
+import SingleTweet from "./SingleTweet";
 
 const mapStateToProps = (state) => {
   return {
     token: state.token,
-  }
+  };
 };
 
 const Status = ({ cookies, token }) => {
-  const [tweet, setTweet] = useState('');
+  const [tweet, setTweet] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [modalTweet, setModalTweet] = useState('');
+  const [modalTweet, setModalTweet] = useState("");
 
   const { username, tweetId } = useParams();
 
   useEffect(async () => {
-    const result = await axios(`http://localhost:5000/api/tweet/${username}/${tweetId}`);
+    const result = await axios(
+      `http://localhost:5000/api/tweet/${username}/${tweetId}`
+    );
 
     setTweet(result.data);
   }, []);
@@ -33,18 +43,19 @@ const Status = ({ cookies, token }) => {
   };
 
   const handleRetweet = (tweet) => {
-    retweet(token, tweet)
+    retweet(token, tweet);
   };
 
   return (
-    <div className="container w-1/2 flex flex-col border-r border-l border-gray-400">
+    <div className="container w-1/2 flex flex-col border-r border-l border-gray-200">
       <div className="px-2">
         <div className="flex flex-row pb-2">
-          <div>
-            <img
-              className="rounded-full shadow-inner my-2 mr-2 h-16 w-16"
-              src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/256/sign-right-icon.png" />
+          <div className="pr-4">
+            <span className="text-3xl h-16 w-16">
+              <FontAwesomeIcon icon={faUserCircle} />
+            </span>
           </div>
+
           <div className="flex flex-col justify-center">
             <span className="font-bold hover:underline">
               <Link to={`/${tweet.username}`}>{tweet.userFullname} </Link>
@@ -53,63 +64,75 @@ const Status = ({ cookies, token }) => {
           </div>
         </div>
 
-        {tweet?.parentTweet &&
-          <>
+        {tweet?.parentTweet && (
+          <div>
             <span className="inline-block mb-4">{`Replying to @${tweet.parentTweet.username}`}</span>
             <br />
-          </>
-        }
+          </div>
+        )}
 
-        <span className="text-xl">{tweet.tweetText}</span>
-        <br />
-        <span className="">{dayjs(tweet.date).format('H.mm A · MMM D, YYYY')}</span>
-        <br />
-        <div className="mt-4">
-          <span onClick={() => handleReply(tweet)} className="mx-4">
-            <FontAwesomeIcon icon={faReply} />
+        <div className="mb-4">
+          <span className="text-xl">{tweet.tweetText}</span>
+        </div>
+
+        <div className="mb-4">
+          <span className="text-gray-500">
+            {dayjs(tweet.date).format("H:mm A · MMM D, YYYY")}
           </span>
-          <span onClick={() => handleRetweet(tweet)} className="mx-4">
+        </div>
+
+        <div
+          className="mt-4 flex justify-around p-2 border-y-[2px]"
+          style={{
+            borderTop: "1px",
+            borderBottom: "1px",
+            borderStyle: "solid",
+            borderColor: "rgb(229, 231, 235)", // text-gray-200
+          }}
+        >
+          <span onClick={() => handleReply(tweet)} className="cursor-pointer">
+            <FontAwesomeIcon icon={faReply} />
+            <span className="text-gray-500"> 393</span>
+          </span>
+          <span onClick={() => handleRetweet(tweet)} className="cursor-pointer">
             <FontAwesomeIcon icon={faRetweet} />
+            <span className="text-gray-500"> 701</span>
+          </span>
+          <span onClick={() => {}} className="cursor-pointer">
+            <FontAwesomeIcon icon={faHeartbeat} />
+            <span className="text-gray-500"> 1,053</span>
+          </span>
+          <span onClick={() => {}} className="cursor-pointer">
+            <FontAwesomeIcon icon={faChartBar} />
+            <span className="text-gray-500"> 39K</span>
+          </span>
+          <span onClick={() => {}} className="cursor-pointer">
+            <FontAwesomeIcon icon={faShare} />
           </span>
         </div>
       </div>
 
       {tweet?.childTweet &&
-        tweet.childTweet.map(t => {
+        tweet.childTweet.map((t) => {
           return (
-            <div>
-              <div className="flex flex-row p-2 my-2 border-b border-gray-400">
-                <div className="w-1/6">
-                  <div>
-                    <img className="shadow-inner rounded-full h-16 w-16" src={'https://icons.iconarchive.com/icons/paomedia/small-n-flat/256/sign-right-icon.png'} />
-                  </div>
-                </div>
-                <div className="w-5/6">
-                  <span className="font-bold hover:underline">
-                    <Link to={`/${t.username}`}>{t.userFullname} </Link>
-                  </span>
-                  <span>@{t.username} · {dayjs(t.date).format('MMM D, YYYY')}</span>
-                  <br />
-                  <span>{t.tweetText}</span>
-                  <br />
-                  <div className="mt-4">
-                    <span onClick={() => handleReply(t)} className="mx-4">
-                      <FontAwesomeIcon icon={faReply} />
-                    </span>
-                    <span onClick={() => handleRetweet(t)} className="mx-4">
-                      <FontAwesomeIcon icon={faRetweet} />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <SingleTweet
+              key={t._id}
+              tweet={t}
+              handleReply={handleReply}
+              handleRetweet={handleRetweet}
+              usernameProfile={t.username}
+            />
           );
-        })
-      }
+        })}
 
-      <ReplyTweetModal cookies={cookies} displayModal={showModal} showModal={setShowModal} reply={modalTweet} />
+      <ReplyTweetModal
+        cookies={cookies}
+        displayModal={showModal}
+        showModal={setShowModal}
+        reply={modalTweet}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default connect(mapStateToProps)(Status);

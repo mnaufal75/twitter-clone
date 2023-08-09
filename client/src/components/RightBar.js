@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 
 const RigthBar = () => {
   const listOfSuggestion = [
@@ -27,8 +27,8 @@ const RigthBar = () => {
         <div className="right-bar__suggestion-list">
           {listOfSuggestion.map((item) => {
             return (
-              <Link>
-                <div key={item.username} className="flex justify-between p-4">
+              <Link key={item.username} to={`/${item.username}`}>
+                <div className="flex justify-between p-4">
                   <div className="flex flex-col">
                     <span>{item.name}</span>
                     <span className="text-gray-500">@{item.username}</span>

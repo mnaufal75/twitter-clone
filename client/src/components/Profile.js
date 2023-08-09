@@ -1,21 +1,17 @@
 import {
   faBell,
   faCalendar,
-  faChartBar,
   faEllipsisH,
-  faHeartbeat,
-  faReply,
   faRetweet,
-  faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ReplyTweetModal from "../modals/ReplyTweetModal";
 import { retweet } from "../modals/RetweetModal";
+import SingleTweet from "./SingleTweet";
 
 const mapStateToProps = (state) => {
   return { token: state.token, username: state.username };
@@ -89,7 +85,7 @@ const Profile = ({ cookies, token, username }) => {
   };
 
   return (
-    <div className="container w-1/2 h-auto flex flex-col border-r border-l border-gray-400">
+    <div className="container w-1/2 h-auto flex flex-col border-r border-l border-gray-200">
       <div className="home__header">
         <div className="home__banner bg-gray-300 h-48 w-full"></div>
 
@@ -170,59 +166,15 @@ const Profile = ({ cookies, token, username }) => {
         </div>
       </div>
 
-      {datas?.tweets?.map((data) => {
+      {datas?.tweets?.map((tweet) => {
         return (
-          <div className="flex flex-row p-2 my-2 border-b border-gray-400">
-            <div className="w-1/6">
-              <div>
-                <img
-                  className="shadow-inner rounded-full h-16 w-16"
-                  src={
-                    "https://icons.iconarchive.com/icons/paomedia/small-n-flat/256/sign-right-icon.png"
-                  }
-                />
-              </div>
-            </div>
-            <div className="w-5/6">
-              <Link
-                key={data._id}
-                to={`/${usernameProfile}/status/${data._id}`}
-              >
-                <span className="font-bold hover:underline">
-                  <Link to={`/${data.username}`}>{data.userFullname} </Link>
-                </span>
-                <span>
-                  @{data.username} · {dayjs(data.date).format("MMM D, YYYY")}
-                </span>
-                <br />
-                <span>{data.tweetText}</span>
-                <br />
-              </Link>
-              <div className="mt-4 flex justify-between">
-                <span
-                  onClick={() => handleReply(data)}
-                  className="mx-4 cursor-pointer"
-                >
-                  <FontAwesomeIcon icon={faReply} />
-                </span>
-                <span
-                  onClick={() => handleRetweet(data)}
-                  className="mx-4 cursor-pointer"
-                >
-                  <FontAwesomeIcon icon={faRetweet} />
-                </span>
-                <span onClick={() => {}} className="mx-4 cursor-pointer">
-                  <FontAwesomeIcon icon={faHeartbeat} />
-                </span>
-                <span onClick={() => {}} className="mx-4 cursor-pointer">
-                  <FontAwesomeIcon icon={faChartBar} />
-                </span>
-                <span onClick={() => {}} className="mx-4 cursor-pointer">
-                  <FontAwesomeIcon icon={faShare} />
-                </span>
-              </div>
-            </div>
-          </div>
+          <SingleTweet
+            key={tweet._id}
+            tweet={tweet}
+            handleReply={handleReply}
+            handleRetweet={handleRetweet}
+            usernameProfile={usernameProfile}
+          />
         );
       })}
 
