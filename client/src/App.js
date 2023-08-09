@@ -57,7 +57,7 @@ const App = ({ cookies, token, setToken, getUserData }) => {
 
   return (
     <Router>
-      <div className="App w-3/4 min-h-screen h-auto mx-auto px-16 flex">
+      <div className="App min-h-screen h-auto mx-auto px-16 flex justify-center">
         <Switch>
           <Route exact path="/">
             <Redirect to="/login" />

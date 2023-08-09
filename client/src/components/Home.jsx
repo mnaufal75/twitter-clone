@@ -51,13 +51,10 @@ const Home = ({ token, timeline, createTweet }) => {
   };
 
   return (
-    <div
-      className="home container flex flex-col border-r border-l border-gray-200"
-      style={{ width: "600px" }}
-    >
+    <div className="home w-full sm:max-w-[500px] flex flex-col border-r border-l border-gray-200">
       <div className="home__title font-bold text-xl p-4">Home</div>
 
-      <div className="home__tweet-box flex flex-row p-2 my-2 border-b border-gray-200 w-full">
+      <div className="home__tweet-box sm:flex flex-row p-2 my-2 border-b border-gray-200 hidden w-full">
         <div className="mr-4">
           <span className="text-3xl h-16 w-16">
             <FontAwesomeIcon icon={faUserCircle} />

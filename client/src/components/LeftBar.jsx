@@ -54,11 +54,8 @@ const LeftBar = ({ cookies, username, userFullname, logout }) => {
   };
 
   return (
-    <div
-      className="left-bar container h-screen flex flex-col justify-between pl-16 pr-4"
-      style={{ width: "320px" }}
-    >
-      <div>
+    <div className="left-bar w-[150px] xl:min-w-[320px] h-screen hidden sm:flex flex-col justify-between pl-16 pr-4">
+      <div className="w-full">
         <div className="left-bar__icon twitter-icon py-4">
           <span className="mx-4 cursor-pointer text-3xl">
             <FontAwesomeIcon icon={faTwitter} />
@@ -69,65 +66,85 @@ const LeftBar = ({ cookies, username, userFullname, logout }) => {
           <div className="my-2 p-2">
             <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
               <FontAwesomeIcon icon={faHome} className="mr-4" />
-              <Link to="/home">Home</Link>
+              <Link to="/home" className="hidden xl:inline">
+                Home
+              </Link>
             </span>
           </div>
           <div className="my-2 p-2">
             <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
               <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-4" />
-              <Link to="#">Explore</Link>
+              <Link to="#" className="hidden xl:inline">
+                Explore
+              </Link>
             </span>
           </div>
           <div className="my-2 p-2">
             <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
               <FontAwesomeIcon icon={faBell} className="mr-4" />
-              <Link to="#">Notifications</Link>
+              <Link to="#" className="hidden xl:inline">
+                Notifications
+              </Link>
             </span>
           </div>
           <div className="my-2 p-2">
             <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
               <FontAwesomeIcon icon={faMessage} className="mr-4" />
-              <Link to="#">Messages</Link>
+              <Link to="#" className="hidden xl:inline">
+                Messages
+              </Link>
             </span>
           </div>
           <div className="my-2 p-2">
             <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
               <FontAwesomeIcon icon={faList} className="mr-4" />
-              <Link to="#">Lists</Link>
+              <Link to="#" className="hidden xl:inline">
+                Lists
+              </Link>
             </span>
           </div>
           <div className="my-2 p-2">
             <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
               <FontAwesomeIcon icon={faUsers} className="mr-4 text-sm" />
-              <Link to="#">Bookmark</Link>
+              <Link to="#" className="hidden xl:inline">
+                Bookmark
+              </Link>
             </span>
           </div>
           <div className="my-2 p-2">
             <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
               <FontAwesomeIcon icon={faBookmark} className="mr-4" />
-              <Link to="#">Communities</Link>
+              <Link to="#" className="hidden xl:inline">
+                Communities
+              </Link>
             </span>
           </div>
           <div className="my-2 p-2">
             <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
               <FontAwesomeIcon icon={faCheck} className="mr-4" />
-              <Link to="#">Verified</Link>
+              <Link to="#" className="hidden xl:inline">
+                Verified
+              </Link>
             </span>
           </div>
           <div className="my-2 p-2">
             <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
               <FontAwesomeIcon icon={faUser} className="mr-4" />
-              <Link to="#">Profile</Link>
+              <Link to="#" className="hidden xl:inline">
+                Profile
+              </Link>
             </span>
           </div>
           <div className="my-2 p-2">
             <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
               <FontAwesomeIcon icon={faEllipsis} className="mr-4" />
-              <Link to="#">More</Link>
+              <Link to="#" className="hidden xl:inline">
+                More
+              </Link>
             </span>
           </div>
           <button
-            className="my-2 px-4 py-2 w-full rounded-full bg-blue-400 text-white text-lg"
+            className="my-2 px-4 py-2 w-full rounded-full bg-blue-400 text-white text-lg hidden xl:inline"
             onClick={() => setShowModal(!showModal)}
           >
             Post
@@ -142,7 +159,7 @@ const LeftBar = ({ cookies, username, userFullname, logout }) => {
               <FontAwesomeIcon icon={faUserCircle} />
             </span>
           </div>
-          <div className="flex flex-col">
+          <div className="hidden xl:flex flex-col">
             <span className="font-bold">
               <Link to={`/${username}`}>{userFullname}</Link>
             </span>
@@ -150,7 +167,7 @@ const LeftBar = ({ cookies, username, userFullname, logout }) => {
           </div>
         </div>
 
-        <div className="cursor-pointer" onClick={handleLogout}>
+        <div className="hidden xl:block cursor-pointer" onClick={handleLogout}>
           <FontAwesomeIcon icon={faEllipsis} />
         </div>
       </div>

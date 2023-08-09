@@ -88,23 +88,20 @@ const Profile = ({ cookies, token, username }) => {
   };
 
   return (
-    <div
-      className="home container w-1/2 h-auto flex flex-col border-r border-l border-gray-200"
-      style={{ width: "600px" }}
-    >
-      <div className="home__title font-bold text-xl p-4">
+    <div className="profile w-full sm:max-w-[500px] h-auto flex flex-col border-r border-l border-gray-200">
+      <div className="profile__title font-bold text-xl p-4">
         <span className="cursor-pointer mr-4" onClick={history.goBack}>
           <FontAwesomeIcon icon={faArrowLeft} />
         </span>
         <span>{datas.userFullname}</span>
       </div>
 
-      <div className="home__header">
-        <div className="home__banner bg-gray-300 h-48 w-full"></div>
+      <div className="profile__header">
+        <div className="profile__banner bg-gray-300 h-48 w-full"></div>
 
         <div className="p-4">
           <div className="flex flex-row items-end justify-between h-12 mb-4">
-            <div className="home__profile-image">
+            <div className="profile__profile-image">
               <img
                 className="rounded-full"
                 src="https://pbs.twimg.com/profile_images/1585133755185778689/y09UYQFQ_400x400.jpg"
@@ -114,7 +111,7 @@ const Profile = ({ cookies, token, username }) => {
               />
             </div>
 
-            <div className="home__button flex flex-row">
+            <div className="profile__button flex flex-row">
               {username !== usernameProfile && (
                 <>
                   <span className="rounded-full border-2 w-10 h-10 flex justify-center items-center mr-2">
@@ -141,29 +138,29 @@ const Profile = ({ cookies, token, username }) => {
             </div>
           </div>
 
-          <div className="home__description">
+          <div className="profile__description">
             <div className="mb-4">
-              <div className="home__userFullname font-bold text-2xl">
+              <div className="profile__userFullname font-bold text-2xl">
                 {datas.userFullname}
               </div>
-              <div className="home__username text-gray-500">
+              <div className="profile__username text-gray-500">
                 @{datas.username}
               </div>
             </div>
 
-            <div className="home__description-detail mb-4">
+            <div className="profile__description-detail mb-4">
               BOOM Esports's Official Twitter Account! Home of DOTA2, VALORANT
               and PUBGM teams. Inquiries/Contact: business@boomesports.gg
             </div>
 
-            <div className="home__joined-date mb-4">
+            <div className="profile__joined-date mb-4">
               <span>
                 <FontAwesomeIcon icon={faCalendar} />
               </span>
               <span className="text-gray-500">{` Joined May 2017`}</span>
             </div>
 
-            <div className="home__follow-count">
+            <div className="profile__follow-count">
               <span className="mr-4">
                 {/* <span className="font-bold">{datas?.following?.length}</span>{" "} */}
                 <span className="font-bold">352</span>{" "}
