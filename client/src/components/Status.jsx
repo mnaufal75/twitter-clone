@@ -1,4 +1,5 @@
 import {
+  faArrowLeft,
   faChartBar,
   faHeartbeat,
   faReply,
@@ -15,6 +16,7 @@ import { Link, useParams } from "react-router-dom";
 import ReplyTweetModal from "../modals/ReplyTweetModal";
 import { retweet } from "../modals/RetweetModal";
 import SingleTweet from "./SingleTweet";
+import { useHistory } from "react-router-dom";
 
 const mapStateToProps = (state) => {
   return {
@@ -26,6 +28,8 @@ const Status = ({ cookies, token }) => {
   const [tweet, setTweet] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [modalTweet, setModalTweet] = useState("");
+
+  const history = useHistory();
 
   const { username, tweetId } = useParams();
 
@@ -50,7 +54,14 @@ const Status = ({ cookies, token }) => {
   };
 
   return (
-    <div className="container w-1/2 flex flex-col border-r border-l border-gray-200">
+    <div className="status container w-1/2 flex flex-col border-r border-l border-gray-200">
+      <div className="status__title font-bold text-xl p-4">
+        <span className="cursor-pointer mr-4" onClick={history.goBack}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </span>
+        Post
+      </div>
+
       <div className="px-2">
         <div className="flex flex-row pb-2">
           <div className="pr-4">

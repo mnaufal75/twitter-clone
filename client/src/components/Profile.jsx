@@ -1,4 +1,5 @@
 import {
+  faArrowLeft,
   faBell,
   faCalendar,
   faEllipsisH,
@@ -8,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ReplyTweetModal from "../modals/ReplyTweetModal";
 import { retweet } from "../modals/RetweetModal";
 import SingleTweet from "./SingleTweet";
@@ -22,6 +23,8 @@ const Profile = ({ cookies, token, username }) => {
   const [followed, setFollowed] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [tweet, setTweet] = useState("");
+
+  const history = useHistory();
 
   const usernameProfile = useParams().username;
 
@@ -85,13 +88,20 @@ const Profile = ({ cookies, token, username }) => {
   };
 
   return (
-    <div className="container w-1/2 h-auto flex flex-col border-r border-l border-gray-200">
+    <div className="home container w-1/2 h-auto flex flex-col border-r border-l border-gray-200">
+      <div className="home__title font-bold text-xl p-4">
+        <span className="cursor-pointer mr-4" onClick={history.goBack}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </span>
+        <span>{datas.userFullname}</span>
+      </div>
+
       <div className="home__header">
         <div className="home__banner bg-gray-300 h-48 w-full"></div>
 
         <div className="p-4">
           <div className="flex flex-row items-end justify-between h-12 mb-4">
-            <div>
+            <div className="home__profile-image">
               <img
                 className="rounded-full"
                 src="https://pbs.twimg.com/profile_images/1585133755185778689/y09UYQFQ_400x400.jpg"
