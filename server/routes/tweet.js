@@ -1,67 +1,68 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const passport = require('passport');
+const passport = require("passport");
 
-const User = require('../models/User');
-const Tweet = require('../models/Tweet');
+const User = require("../models/User");
+const Tweet = require("../models/Tweet");
 
-router.get('/timeline/', passport.authenticate('jwt', { session: false }),
+router.get(
+  "/timeline/",
+  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const user = await User
-      .findOne({
-        username: req.user.username,
-      })
-      .populate("timeline");
+    const user = await User.findOne({
+      username: req.user.username,
+    }).populate("timeline");
 
     const { username, userFullname, timeline } = user;
     res.send({ username, userFullname, timeline });
-  });
+  }
+);
 
-router.get('/:username', async (req, res) => {
-  const user = await User
-    .findOne({
-      username: req.params.username,
-    })
+router.get("/:username", async (req, res) => {
+  const user = await User.findOne({
+    username: req.params.username,
+  })
     .populate("tweets")
-    .sort({ "_id": -1 });
+    .sort({ _id: -1 });
   const { username, userFullname, tweets } = user;
   res.send({ username, userFullname, tweets });
 });
 
-router.get('/:username/:tweetId', async (req, res) => {
-  const tweet = await Tweet
-    .findOne({
-      _id: (req.params.tweetId),
-    })
+router.get("/:username/:tweetId", async (req, res) => {
+  const tweet = await Tweet.findOne({
+    _id: req.params.tweetId,
+  })
     .populate("user")
     .populate("parentTweet")
     .populate("childTweet");
 
-  res.send(tweet)
+  res.send(tweet);
 });
 
-router.post('/:tweetId/retweet', passport.authenticate('jwt', { session: false }),
+router.post(
+  "/:tweetId/retweet",
+  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const user = await User
-      .findOne({
-        username: req.user.username,
-      })
+    const user = await User.findOne({
+      username: req.user.username,
+    });
 
-    const tweet = await Tweet
-      .findById(req.params.tweetId);
+    const tweet = await Tweet.findById(req.params.tweetId);
 
     user.retweetList.push(tweet);
     await user.save();
 
     res.send(tweet);
-  });
+  }
+);
 
-router.post('/', passport.authenticate('jwt', { session: false }),
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const user = await User
-      .findOne({
-        username: req.user.username,
-      })
+    const user = await User.findOne({
+      username: req.user.username,
+    });
 
     const tweet = new Tweet({
       userId: user._id,
@@ -72,9 +73,8 @@ router.post('/', passport.authenticate('jwt', { session: false }),
       parentTweet: req.body.parentTweet,
     });
 
-    user.followers.map(async f => {
-      const follower = await User
-        .findById(String(f._id));
+    user.followers.map(async (f) => {
+      const follower = await User.findById(String(f._id));
       await follower.timeline.push(tweet);
       await follower.save();
     });
@@ -84,16 +84,16 @@ router.post('/', passport.authenticate('jwt', { session: false }),
     await user.save();
     await tweet.save();
 
-    const parentTweet = await Tweet
-      .findOne({
-        _id: req.body.parentTweet,
-      });
+    const parentTweet = await Tweet.findOne({
+      _id: req.body.parentTweet,
+    });
     if (parentTweet !== null) {
       await parentTweet.childTweet.push(tweet);
       await parentTweet.save();
     }
 
     res.send(tweet);
-  });
+  }
+);
 
 module.exports = router;
