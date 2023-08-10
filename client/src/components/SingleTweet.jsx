@@ -36,7 +36,7 @@ const SingleTweet = ({
               <Link to={`/${tweet.username}`}>{tweet.userFullname} </Link>
             </span>
             <span className="text-gray-500">
-              @{tweet.username} · {dayjs(tweet.date).format("MMM D, YYYY")}
+              @{tweet.username} · {dayjs(tweet.createdAt).format("MMM D, YYYY")}
             </span>
           </div>
           <div>

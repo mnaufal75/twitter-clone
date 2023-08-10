@@ -13,7 +13,7 @@ router.get(
     })
       .populate({
         path: "timeline",
-        options: { sort: { date: -1 }, limit: 10 },
+        options: { sort: { createdAt: -1 }, limit: 10 },
       })
       .populate("tweets")
       .populate("followers")

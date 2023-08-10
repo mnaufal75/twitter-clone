@@ -92,7 +92,7 @@ const Status = ({ cookies, token }) => {
 
         <div className="mb-4">
           <span className="text-gray-500">
-            {dayjs(tweet.date).format("H:mm A · MMM D, YYYY")}
+            {dayjs(tweet.createdAt).format("H:mm A · MMM D, YYYY")}
           </span>
         </div>
 

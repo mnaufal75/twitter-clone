@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const schema = mongoose.Schema({
   userId: {
@@ -7,16 +7,18 @@ const schema = mongoose.Schema({
   },
   username: String,
   userFullname: String,
-  date: Date,
+  createdAt: Date,
   tweetText: String,
   parentTweet: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Tweet",
   },
-  childTweet: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Tweet",
-  }],
+  childTweet: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tweet",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Tweet", schema);

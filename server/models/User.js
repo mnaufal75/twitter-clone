@@ -1,39 +1,39 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const schema = mongoose.Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
-  userFullname: String,
-  date: Date,
+  userFullname: { type: String, required: true },
+  createdAt: Date,
   tweets: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Tweet",
-    }
+    },
   ],
   followers: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-    }
+    },
   ],
   following: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-    }
+    },
   ],
   timeline: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Tweet",
-    }
+    },
   ],
   retweetList: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Tweet",
-    }
+    },
   ],
 });
 

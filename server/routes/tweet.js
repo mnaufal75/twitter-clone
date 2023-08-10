@@ -68,7 +68,7 @@ router.post(
       userId: user._id,
       username: user.username,
       userFullname: user.userFullname,
-      date: Date.now(),
+      createdAt: Date.now(),
       tweetText: req.body.tweetText,
       parentTweet: req.body.parentTweet,
     });
