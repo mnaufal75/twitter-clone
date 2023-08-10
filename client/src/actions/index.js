@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   CREATE_TWEET,
+  FOLLOW_USER,
   GET_TIMELINE,
   GET_USER_DATA,
   LOGIN,
@@ -11,10 +12,12 @@ import {
   SIGNUP_ERROR,
 } from "../constants/action-types";
 
+const API_ENDPOINT = "http://localhost:5000/api";
+
 export function signup(query) {
   return async function (dispatch) {
     return axios
-      .post("http://localhost:5000/api/auth/signup", query)
+      .post(`${API_ENDPOINT}/auth/signup`, query)
       .then((response) => {
         dispatch({ type: SIGNUP, payload: response.data });
       })
@@ -27,7 +30,7 @@ export function signup(query) {
 export function login(query) {
   return async function (dispatch) {
     return axios
-      .post("http://localhost:5000/api/auth/login", query)
+      .post(`${API_ENDPOINT}/auth/login`, query)
       .then((response) => {
         dispatch({ type: LOGIN, payload: response.data });
       })
@@ -46,7 +49,7 @@ export function logout() {
 export function createTweet({ token, query }) {
   return async function (dispatch) {
     return axios
-      .post("http://localhost:5000/api/tweet", query, {
+      .post(`${API_ENDPOINT}/tweet`, query, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -59,7 +62,7 @@ export function createTweet({ token, query }) {
 
 export function getUserData(token) {
   return async function (dispatch) {
-    return axios("http://localhost:5000/api/user", {
+    return axios(`${API_ENDPOINT}/user`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -71,7 +74,7 @@ export function getUserData(token) {
 
 export function getTimeline(token) {
   return async function (dispatch) {
-    return axios("http://localhost:5000/api/tweet/timeline", {
+    return axios(`${API_ENDPOINT}/tweet/timeline`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -84,5 +87,23 @@ export function getTimeline(token) {
 export function setToken(token) {
   return function (dispatch) {
     dispatch({ type: SET_TOKEN, payload: token });
+  };
+}
+
+export function followUser({ token, username }) {
+  return async function (dispatch) {
+    return axios
+      .post(
+        `${API_ENDPOINT}/user/${username}/follow`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        dispatch({ type: FOLLOW_USER, payload: response.data });
+      });
   };
 }

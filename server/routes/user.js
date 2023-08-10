@@ -54,20 +54,28 @@ router.post(
       username: req.params.username,
     });
 
-    if (req.body.follow === true) {
+    const isFollowed =
+      follower.following.filter((userId) => userId.equals(followed._id))
+        .length > 0;
+
+    if (!isFollowed) {
       await followed.followers.push(follower);
       await follower.following.push(followed);
     } else {
       // Remove follower from followed list
-      const y = followed.followers.find((x) => x._id.equals(follower._id));
-      if (y !== undefined) {
-        await followed.followers.remove({ _id: y });
+      const allFollowers = followed.followers.find((u) =>
+        u._id.equals(follower._id)
+      );
+      if (allFollowers) {
+        await followed.followers.remove({ _id: allFollowers });
       }
 
       // Remove followed from following list
-      const z = follower.following.find((x) => x._id.equals(followed._id));
-      if (z !== undefined) {
-        await follower.following.remove({ _id: z });
+      const allFollowedUsers = follower.following.find((u) =>
+        u._id.equals(followed._id)
+      );
+      if (allFollowedUsers) {
+        await follower.following.remove({ _id: allFollowedUsers });
       }
     }
 

@@ -1,6 +1,17 @@
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { followUser } from "../actions";
 
-const RigthBar = () => {
+const mapStateToProps = (state) => {
+  return { token: state.token };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    followUser: (query) => dispatch(followUser(query)),
+  };
+};
+const RigthBar = ({ token, followUser }) => {
   const listOfSuggestion = [
     {
       name: "Elon Musk",
@@ -11,13 +22,17 @@ const RigthBar = () => {
       username: "BillGates",
     },
     {
-      name: "MrBeast",
-      username: "MrBeast",
+      name: "New User!",
+      username: "newUser",
     },
   ];
 
+  const handleFollow = (username) => {
+    followUser({ token, username });
+  };
+
   return (
-    <div className="right-bar min-w-[370px] h-screen sticky top-0 hidden lg:block p-4 z-[-1]">
+    <div className="right-bar min-w-[370px] h-screen sticky top-0 hidden lg:block p-4">
       <div className="right-bar__suggestion-box rounded-lg m-4 p-4 bg-gray-100">
         <div className="mb-4">
           <span className="right-bar__title text-2xl mb-4 font-bold">
@@ -36,7 +51,7 @@ const RigthBar = () => {
                   <div className="flex items-center">
                     <button
                       className="bg-blue-400 rounded-lg text-base text-white h-8 px-2 cursor-pointer"
-                      onClick={() => {}}
+                      onClick={() => handleFollow(item.username)}
                     >
                       Follow
                     </button>
@@ -54,4 +69,4 @@ const RigthBar = () => {
   );
 };
 
-export default RigthBar;
+export default connect(mapStateToProps, mapDispatchToProps)(RigthBar);
