@@ -4,7 +4,7 @@ import { useState } from "react";
 import { connect } from "react-redux";
 
 import { createTweet } from "../actions";
-import ReplyTweetModal from "../modals/ReplyTweetModal";
+import CreateTweetModal from "../modals/CreateTweetModal";
 import { retweet } from "../modals/RetweetModal";
 import SingleTweet from "./SingleTweet";
 
@@ -102,10 +102,10 @@ const Home = ({ token, timeline, createTweet }) => {
         })}
       </div>
 
-      <ReplyTweetModal
+      <CreateTweetModal
         displayModal={showModal}
         showModal={setShowModal}
-        reply={modalTweet}
+        parentTweet={modalTweet}
       />
     </div>
   );

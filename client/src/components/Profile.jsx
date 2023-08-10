@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
-import ReplyTweetModal from "../modals/ReplyTweetModal";
+import CreateTweetModal from "../modals/CreateTweetModal";
 import { retweet } from "../modals/RetweetModal";
 import SingleTweet from "./SingleTweet";
 
@@ -189,11 +189,10 @@ const Profile = ({ cookies, token, username }) => {
         );
       })}
 
-      <ReplyTweetModal
-        cookies={cookies}
+      <CreateTweetModal
         displayModal={showModal}
         showModal={setShowModal}
-        reply={tweet}
+        parentTweet={tweet}
       />
     </div>
   );

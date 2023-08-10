@@ -13,10 +13,11 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import ReplyTweetModal from "../modals/ReplyTweetModal";
+
+import { useHistory } from "react-router-dom";
+import CreateTweetModal from "../modals/CreateTweetModal";
 import { retweet } from "../modals/RetweetModal";
 import SingleTweet from "./SingleTweet";
-import { useHistory } from "react-router-dom";
 
 const mapStateToProps = (state) => {
   return {
@@ -139,11 +140,10 @@ const Status = ({ cookies, token }) => {
           );
         })}
 
-      <ReplyTweetModal
-        cookies={cookies}
+      <CreateTweetModal
         displayModal={showModal}
         showModal={setShowModal}
-        reply={modalTweet}
+        parentTweet={modalTweet}
       />
     </div>
   );

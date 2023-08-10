@@ -17,7 +17,13 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const CreateTweetModal = ({ displayModal, showModal, token, createTweet }) => {
+const CreateTweetModal = ({
+  displayModal,
+  showModal,
+  token,
+  createTweet,
+  parentTweet,
+}) => {
   const [tweetText, setTweetText] = useState("");
 
   const toggleModal = () => {
@@ -36,9 +42,17 @@ const CreateTweetModal = ({ displayModal, showModal, token, createTweet }) => {
 
   const handleTweet = async (e) => {
     if (tweetText.length !== 0) {
-      const query = {
-        tweetText: tweetText,
-      };
+      let query;
+      if (parentTweet) {
+        query = {
+          tweetText: tweetText,
+          parentTweet: parentTweet._id,
+        };
+      } else {
+        query = {
+          tweetText: tweetText,
+        };
+      }
       setTweetText("");
       showModal(!displayModal);
       await createTweet({ token, query });
@@ -56,6 +70,23 @@ const CreateTweetModal = ({ displayModal, showModal, token, createTweet }) => {
           <FontAwesomeIcon icon={faX} />
         </span>
       </div>
+
+      {parentTweet && (
+        <div className="home__parent-tweet-box sm:flex flex-row p-2 my-2 hidden w-full">
+          <div className="mr-4">
+            <span className="text-3xl h-16 w-16">
+              <FontAwesomeIcon icon={faUserCircle} />
+            </span>
+          </div>
+
+          <div className="w-full flex flex-col">
+            <textarea
+              className="w-full p-4 leading-6 resize-none outline-none text-lg"
+              value={parentTweet.tweetText}
+            />
+          </div>
+        </div>
+      )}
 
       <div className="home__tweet-box sm:flex flex-row p-2 my-2 border-b border-gray-200 hidden w-full">
         <div className="mr-4">
