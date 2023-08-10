@@ -43,14 +43,17 @@ const Home = ({ token, timeline, createTweet }) => {
   };
 
   const handleTweet = async (e) => {
-    const query = {
-      tweetText: tweetText,
-    };
-    setTweetText("");
-    await createTweet({ token, query });
+    if (tweetText.length !== 0) {
+      const query = {
+        tweetText: tweetText,
+      };
+      setTweetText("");
+      await createTweet({ token, query });
+    }
   };
 
   return (
+    // TODO: Make left bar and right bat fixed at place
     <div className="home w-full sm:max-w-[500px] flex flex-col border-r border-l border-gray-200">
       <div className="home__title font-bold text-xl p-4">Home</div>
 

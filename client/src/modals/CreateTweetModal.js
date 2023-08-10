@@ -34,13 +34,15 @@ const CreateTweetModal = ({ displayModal, showModal, token, createTweet }) => {
     e.target.style.height = e.target.scrollHeight + 10 + "px";
   };
 
-  const handleTweet = async () => {
-    const query = {
-      tweetText: tweetText,
-    };
-    setTweetText("");
-    showModal(!displayModal);
-    await createTweet({ token, query });
+  const handleTweet = async (e) => {
+    if (tweetText.length !== 0) {
+      const query = {
+        tweetText: tweetText,
+      };
+      setTweetText("");
+      showModal(!displayModal);
+      await createTweet({ token, query });
+    }
   };
 
   return (
