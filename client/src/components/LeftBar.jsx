@@ -54,7 +54,7 @@ const LeftBar = ({ cookies, username, userFullname, logout }) => {
   };
 
   return (
-    <div className="left-bar w-[150px] xl:min-w-[320px] h-screen hidden sm:flex flex-col justify-between pl-16 pr-4">
+    <div className="left-bar w-[100px] xl:min-w-[270px] h-screen sticky top-0 hidden sm:flex flex-col justify-between px-4">
       <div className="w-full">
         <div className="left-bar__icon twitter-icon py-4">
           <span className="mx-4 cursor-pointer text-3xl">
@@ -107,7 +107,7 @@ const LeftBar = ({ cookies, username, userFullname, logout }) => {
             <span className="p-4 text-lg rounded-full hover:bg-gray-200 hover:rounded-2xl">
               <FontAwesomeIcon icon={faUsers} className="mr-4 text-sm" />
               <Link to="#" className="hidden xl:inline">
-                Bookmark
+                Bookmarks
               </Link>
             </span>
           </div>

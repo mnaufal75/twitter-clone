@@ -17,7 +17,7 @@ const RigthBar = () => {
   ];
 
   return (
-    <div className="right-bar min-w-[370px] hidden lg:block p-4">
+    <div className="right-bar min-w-[370px] h-screen sticky top-0 hidden lg:block p-4">
       <div className="right-bar__suggestion-box rounded-lg m-4 p-4 bg-gray-100">
         <div className="mb-4">
           <span className="right-bar__title text-2xl mb-4 font-bold">
