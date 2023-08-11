@@ -30,13 +30,17 @@ const Status = ({ cookies, token }) => {
   const [modalTweet, setModalTweet] = useState("");
 
   const history = useHistory();
+  const API_ENDPOINT =
+    process.env.NODE_ENV === "development"
+      ? "process.env.REACT_APP_DEV_ENDPOINT"
+      : "process.env.REACT_APP_PROD_ENDPOINT";
 
   const { username, tweetId } = useParams();
 
   useEffect(() => {
     async function fetchData() {
       const result = await axios(
-        `http://localhost:5000/api/tweet/${username}/${tweetId}`
+        `${API_ENDPOINT}/tweet/${username}/${tweetId}`
       );
 
       setTweet(result.data);

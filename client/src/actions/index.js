@@ -13,7 +13,10 @@ import {
   SIGNUP_ERROR,
 } from "../constants/action-types";
 
-const API_ENDPOINT = "http://localhost:5000/api";
+const API_ENDPOINT =
+  process.env.NODE_ENV === "development"
+    ? "process.env.REACT_APP_DEV_ENDPOINT"
+    : "process.env.REACT_APP_PROD_ENDPOINT";
 
 export function signup(query) {
   return async function (dispatch) {
@@ -124,7 +127,7 @@ export function followUser({ token, username }) {
 export function retweet({ token, tweet }) {
   return async function (dispatch) {
     const result = await axios
-      .post(`http://localhost:5000/api/tweet/${tweet._id}/retweet`, null, {
+      .post(`${API_ENDPOINT}/tweet/${tweet._id}/retweet`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

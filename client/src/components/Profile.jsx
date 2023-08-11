@@ -36,20 +36,23 @@ const Profile = ({ token, username, profileTimeline, getProfileTimeline }) => {
   const [tweet, setTweet] = useState("");
 
   const history = useHistory();
+  const API_ENDPOINT =
+    process.env.NODE_ENV === "development"
+      ? "process.env.REACT_APP_DEV_ENDPOINT"
+      : "process.env.REACT_APP_PROD_ENDPOINT";
 
   const usernameProfile = useParams().username;
 
   useEffect(() => {
     (async () => {
+      console.log(process.env.REACT_APP_API_ENDPOINT);
       await getProfileTimeline(token);
     })();
   }, [token]);
 
   useEffect(() => {
     (async () => {
-      const result = await axios(
-        `http://localhost:5000/api/tweet/${usernameProfile}`
-      );
+      const result = await axios(`${API_ENDPOINT}/tweet/${usernameProfile}`);
       setDatas(result.data);
     })();
   }, [datas]);
@@ -57,7 +60,7 @@ const Profile = ({ token, username, profileTimeline, getProfileTimeline }) => {
   useEffect(() => {
     (async () => {
       const result = await axios(
-        `http://localhost:5000/api/user/${usernameProfile}/follow`
+        `${API_ENDPOINT}/user/${usernameProfile}/follow`
       );
       const followingList = result?.data?.followers?.filter(
         (f) => f.username === username
@@ -92,15 +95,11 @@ const Profile = ({ token, username, profileTimeline, getProfileTimeline }) => {
         unfollow: true,
       };
     }
-    await axios.post(
-      `http://localhost:5000/api/user/${username}/follow`,
-      query,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    await axios.post(`${API_ENDPOINT}/user/${username}/follow`, query, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     setFollowed(!followed);
   };
 
