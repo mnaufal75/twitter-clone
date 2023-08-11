@@ -38,8 +38,8 @@ const Profile = ({ token, username, profileTimeline, getProfileTimeline }) => {
   const history = useHistory();
   const API_ENDPOINT =
     process.env.NODE_ENV === "development"
-      ? "process.env.REACT_APP_DEV_ENDPOINT"
-      : "process.env.REACT_APP_PROD_ENDPOINT";
+      ? process.env.REACT_APP_DEV_ENDPOINT
+      : process.env.REACT_APP_PROD_ENDPOINT;
 
   const usernameProfile = useParams().username;
 

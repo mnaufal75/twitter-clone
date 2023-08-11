@@ -32,8 +32,8 @@ const Status = ({ cookies, token }) => {
   const history = useHistory();
   const API_ENDPOINT =
     process.env.NODE_ENV === "development"
-      ? "process.env.REACT_APP_DEV_ENDPOINT"
-      : "process.env.REACT_APP_PROD_ENDPOINT";
+      ? process.env.REACT_APP_DEV_ENDPOINT
+      : process.env.REACT_APP_PROD_ENDPOINT;
 
   const { username, tweetId } = useParams();
 
