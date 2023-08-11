@@ -24,7 +24,7 @@ app.use(passport.session());
 // passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
   res.json({
     message: "🦄🌈✨👋🌎🌍🌏✨🌈🦄",
   });
