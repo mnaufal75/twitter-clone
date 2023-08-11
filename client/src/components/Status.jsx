@@ -16,7 +16,6 @@ import { Link, useParams } from "react-router-dom";
 
 import { useHistory } from "react-router-dom";
 import CreateTweetModal from "../modals/CreateTweetModal";
-import { retweet } from "../modals/RetweetModal";
 import SingleTweet from "./SingleTweet";
 
 const mapStateToProps = (state) => {
@@ -51,7 +50,7 @@ const Status = ({ cookies, token }) => {
   };
 
   const handleRetweet = (tweet) => {
-    retweet(token, tweet);
+    // retweet(token, tweet);
   };
 
   return (

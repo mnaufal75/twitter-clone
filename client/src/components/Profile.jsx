@@ -13,7 +13,6 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { getProfileTimeline } from "../actions";
 import CreateTweetModal from "../modals/CreateTweetModal";
-import { retweet } from "../modals/RetweetModal";
 import SingleTweet from "./SingleTweet";
 
 const mapStateToProps = (state) => {
@@ -75,7 +74,7 @@ const Profile = ({ token, username, profileTimeline, getProfileTimeline }) => {
   };
 
   const handleRetweet = (tweet) => {
-    retweet(token, tweet);
+    // retweet(token, tweet);
   };
 
   const followAccount = async (username) => {

@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 
 import { createTweet } from "../actions";
 import CreateTweetModal from "../modals/CreateTweetModal";
-import { retweet } from "../modals/RetweetModal";
 import SingleTweet from "./SingleTweet";
 
 const mapStateToProps = (state) => {
@@ -29,7 +28,7 @@ const Home = ({ token, timeline, createTweet }) => {
   };
 
   const handleRetweet = (tweet) => {
-    retweet(token, tweet);
+    // retweet(token, tweet);
   };
 
   const handleChange = (e) => {
