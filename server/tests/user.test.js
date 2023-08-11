@@ -55,7 +55,6 @@ describe('User test', () => {
           expect(Array.isArray(res.body.followers)).toBeTruthy();
           expect(Array.isArray(res.body.following)).toBeTruthy();
           expect(Array.isArray(res.body.timeline)).toBeTruthy();
-          expect(Array.isArray(res.body.retweetList)).toBeTruthy();
         });
     });
   });

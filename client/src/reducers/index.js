@@ -3,6 +3,7 @@ const initialState = {
   username: "",
   userFullname: "",
   timeline: [],
+  profileTimeline: [],
   tweets: [],
   followers: [],
   following: [],
@@ -42,6 +43,12 @@ const rootReducer = (state = initialState, action) => {
       username: action.payload.username,
       userFullname: action.payload.userFullname,
       timeline: [...action.payload.timeline],
+    });
+  } else if (action.type === "GET_PROFILE_TIMELINE") {
+    return Object.assign({}, state, {
+      username: action.payload.username,
+      userFullname: action.payload.userFullname,
+      profileTimeline: [...action.payload.profileTimeline],
     });
   } else if (action.type === "SET_TOKEN") {
     return Object.assign({}, state, {

@@ -13,29 +13,33 @@ router.get(
     })
       .populate({
         path: "timeline",
+        populate: { path: "tweet" },
+        options: { sort: { createdAt: -1 }, limit: 10 },
+      })
+      .populate({
+        path: "profileTimeline",
+        populate: { path: "tweet" },
         options: { sort: { createdAt: -1 }, limit: 10 },
       })
       .populate("tweets")
       .populate("followers")
       .populate("following");
 
-    console.log(user);
-
     const {
       tweets,
       timeline,
+      profileTimeline,
       followers,
       following,
-      retweetList,
       username,
       userFullname,
     } = user;
     res.send({
       tweets,
       timeline,
+      profileTimeline,
       followers,
       following,
-      retweetList,
       username,
       userFullname,
     });

@@ -10,4 +10,6 @@ export const GET_TIMELINE = "GET_TIMELINE";
 
 export const FOLLOW_USER = "FOLLOW_USER";
 
+export const RETWEET = "RETWEET";
+
 export const SET_TOKEN = "SET_TOKEN";

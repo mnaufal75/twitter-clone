@@ -46,8 +46,6 @@ const SignUp = ({ signup, signupError }) => {
   };
 
   useEffect(() => {
-    console.log(hasSubmit);
-    console.log(JSON.stringify(signupError));
     if (hasSubmit && Object.keys(signupError).length === 0) {
       history.push("/login");
     }

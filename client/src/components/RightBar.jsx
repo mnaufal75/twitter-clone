@@ -22,8 +22,8 @@ const RigthBar = ({ token, followUser }) => {
       username: "BillGates",
     },
     {
-      name: "New User!",
-      username: "newUser",
+      name: "Legion",
+      username: "legion",
     },
   ];
 

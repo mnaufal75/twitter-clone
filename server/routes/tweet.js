@@ -4,6 +4,7 @@ const passport = require("passport");
 
 const User = require("../models/User");
 const Tweet = require("../models/Tweet");
+const Timeline = require("../models/Timeline");
 
 router.get(
   "/timeline/",
@@ -11,10 +12,31 @@ router.get(
   async (req, res) => {
     const user = await User.findOne({
       username: req.user.username,
-    }).populate("timeline");
+    }).populate({
+      path: "timeline",
+      populate: { path: "tweet" },
+      options: { sort: { createdAt: -1 }, limit: 10 },
+    });
 
     const { username, userFullname, timeline } = user;
     res.send({ username, userFullname, timeline });
+  }
+);
+
+router.get(
+  "/profile-timeline",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const user = await User.findOne({
+      username: req.user.username,
+    }).populate({
+      path: "profileTimeline",
+      populate: { path: "tweet" },
+      options: { sort: { createdAt: -1 }, limit: 10 },
+    });
+
+    const { username, userFullname, profileTimeline } = user;
+    res.send({ username, userFullname, profileTimeline });
   }
 );
 
@@ -49,8 +71,21 @@ router.post(
 
     const tweet = await Tweet.findById(req.params.tweetId);
 
-    user.retweetList.push(tweet);
+    const newTimeline = new Timeline({
+      tweet: tweet._id,
+      type: "retweet",
+    });
+
+    user.followers.map(async (f) => {
+      const follower = await User.findById(String(f._id));
+      await follower.timeline.push(newTimeline);
+      await follower.save();
+    });
+
+    await user.profileTimeline.push(newTimeline);
+
     await user.save();
+    await newTimeline.save();
 
     res.send(tweet);
   }
@@ -73,16 +108,23 @@ router.post(
       parentTweet: req.body.parentTweet,
     });
 
+    const newTimeline = new Timeline({
+      tweet: tweet._id,
+      type: "tweet",
+    });
+
     user.followers.map(async (f) => {
       const follower = await User.findById(String(f._id));
-      await follower.timeline.push(tweet);
+      await follower.timeline.push(newTimeline);
       await follower.save();
     });
 
     await user.tweets.push(tweet);
-    await user.timeline.push(tweet);
+    await user.profileTimeline.push(newTimeline);
+
     await user.save();
     await tweet.save();
+    await newTimeline.save();
 
     const parentTweet = await Tweet.findOne({
       _id: req.body.parentTweet,

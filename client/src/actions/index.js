@@ -7,6 +7,7 @@ import {
   LOGIN,
   LOGIN_ERROR,
   LOGOUT,
+  RETWEET,
   SET_TOKEN,
   SIGNUP,
   SIGNUP_ERROR,
@@ -84,6 +85,18 @@ export function getTimeline(token) {
   };
 }
 
+export function getProfileTimeline(token) {
+  return async function (dispatch) {
+    return axios(`${API_ENDPOINT}/tweet/profile-timeline`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
+      dispatch({ type: "GET_PROFILE_TIMELINE", payload: response.data });
+    });
+  };
+}
+
 export function setToken(token) {
   return function (dispatch) {
     dispatch({ type: SET_TOKEN, payload: token });
@@ -105,5 +118,20 @@ export function followUser({ token, username }) {
       .then((response) => {
         dispatch({ type: FOLLOW_USER, payload: response.data });
       });
+  };
+}
+
+export function retweet({ token, tweet }) {
+  return async function (dispatch) {
+    const result = await axios
+      .post(`http://localhost:5000/api/tweet/${tweet._id}/retweet`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        dispatch({ type: RETWEET, payload: response.data });
+      });
+    return result;
   };
 }

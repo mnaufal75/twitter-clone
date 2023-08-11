@@ -89,14 +89,15 @@ const Home = ({ token, timeline, createTweet }) => {
       </div>
 
       <div>
-        {timeline?.map((tweet) => {
+        {timeline?.map((timelineTweet) => {
           return (
             <SingleTweet
-              key={tweet._id}
-              tweet={tweet}
+              key={timelineTweet._id}
+              tweet={timelineTweet.tweet}
               handleReply={handleReply}
               handleRetweet={handleRetweet}
-              usernameProfile={tweet.username}
+              usernameProfile={timelineTweet.tweet.username}
+              isRetweet={timelineTweet.type === "retweet"}
             />
           );
         })}

@@ -26,13 +26,13 @@ const schema = mongoose.Schema({
   timeline: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Tweet",
+      ref: "Timeline",
     },
   ],
-  retweetList: [
+  profileTimeline: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Tweet",
+      ref: "Timeline",
     },
   ],
 });

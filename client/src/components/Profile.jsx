@@ -11,15 +11,26 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
+import { getProfileTimeline } from "../actions";
 import CreateTweetModal from "../modals/CreateTweetModal";
 import { retweet } from "../modals/RetweetModal";
 import SingleTweet from "./SingleTweet";
 
 const mapStateToProps = (state) => {
-  return { token: state.token, username: state.username };
+  return {
+    token: state.token,
+    username: state.username,
+    profileTimeline: state.profileTimeline,
+  };
 };
 
-const Profile = ({ cookies, token, username }) => {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getProfileTimeline: (query) => dispatch(getProfileTimeline(query)),
+  };
+};
+
+const Profile = ({ token, username, profileTimeline, getProfileTimeline }) => {
   const [datas, setDatas] = useState([]);
   const [followed, setFollowed] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -28,6 +39,12 @@ const Profile = ({ cookies, token, username }) => {
   const history = useHistory();
 
   const usernameProfile = useParams().username;
+
+  useEffect(() => {
+    (async () => {
+      await getProfileTimeline(token);
+    })();
+  }, [token]);
 
   useEffect(() => {
     (async () => {
@@ -177,14 +194,15 @@ const Profile = ({ cookies, token, username }) => {
         </div>
       </div>
 
-      {datas?.tweets?.map((tweet) => {
+      {profileTimeline.map((t) => {
         return (
           <SingleTweet
-            key={tweet._id}
-            tweet={tweet}
+            key={t._id}
+            tweet={t.tweet}
             handleReply={handleReply}
             handleRetweet={handleRetweet}
             usernameProfile={usernameProfile}
+            isRetweet={t.type === "retweet"}
           />
         );
       })}
@@ -198,4 +216,4 @@ const Profile = ({ cookies, token, username }) => {
   );
 };
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
