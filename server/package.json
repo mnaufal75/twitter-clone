@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "jest --coverage --verbose --runInBand",
-    "vercel-build": "echo hello"
+    "test": "jest --coverage --verbose --runInBand"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
