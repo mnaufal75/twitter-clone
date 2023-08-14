@@ -78,7 +78,7 @@ const Login = ({ token, loginError, login }) => {
           </div>
           <div>
             <span className="login-form__error-message text-red-400">
-              {loginError?.data}
+              {JSON.stringify(loginError?.data)}
             </span>
           </div>
           <div>

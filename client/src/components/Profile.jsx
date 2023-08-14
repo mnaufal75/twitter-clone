@@ -1,3 +1,4 @@
+import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 import {
   faArrowLeft,
   faBell,
@@ -45,7 +46,6 @@ const Profile = ({ token, username, profileTimeline, getProfileTimeline }) => {
 
   useEffect(() => {
     (async () => {
-      console.log(process.env.REACT_APP_API_ENDPOINT);
       await getProfileTimeline(token);
     })();
   }, [token]);
@@ -117,14 +117,10 @@ const Profile = ({ token, username, profileTimeline, getProfileTimeline }) => {
 
         <div className="p-4">
           <div className="flex flex-row items-end justify-between h-12 mb-4">
-            <div className="profile__profile-image">
-              <img
-                className="rounded-full"
-                src="https://pbs.twimg.com/profile_images/1585133755185778689/y09UYQFQ_400x400.jpg"
-                height={"120px"}
-                width={"120px"}
-                alt="profile"
-              />
+            <div className="profile__profile-image bg-white rounded-full p-4">
+              <span className="text-8xl">
+                <FontAwesomeIcon icon={faUserCircle} />
+              </span>
             </div>
 
             <div className="profile__button flex flex-row">
