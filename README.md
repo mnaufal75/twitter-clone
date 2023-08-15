@@ -1,6 +1,6 @@
 # Twitter-Clone by Muhammad Naufal
 
-Check it live [here](https://64d9dd52d2d5de14d9d9801b--radiant-kangaroo-820164.netlify.app).\
+Check it live [here](https://radiant-kangaroo-820164.netlify.app/).\
 Backend [here](https://twitter-clone-api-75lp.onrender.com).
 
 ## Setup
