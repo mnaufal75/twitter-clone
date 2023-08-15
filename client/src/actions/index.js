@@ -127,7 +127,7 @@ export function followUser({ token, username }) {
 export function retweet({ token, tweet }) {
   return async function (dispatch) {
     const result = await axios
-      .post(`${API_ENDPOINT}/tweet/${tweet._id}/retweet`, null, {
+      .post(`${API_ENDPOINT}/tweet/${tweet.tweet._id}/retweet`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

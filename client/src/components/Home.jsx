@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { connect } from "react-redux";
 
-import { createTweet } from "../actions";
+import { createTweet, retweet } from "../actions";
 import CreateTweetModal from "../modals/CreateTweetModal";
 import SingleTweet from "./SingleTweet";
 
@@ -14,10 +14,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     createTweet: (query) => dispatch(createTweet(query)),
+    retweet: (query) => dispatch(retweet(query)),
   };
 };
 
-const Home = ({ token, timeline, createTweet }) => {
+const Home = ({ token, timeline, createTweet, retweet }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalTweet, setModalTweet] = useState("");
   const [tweetText, setTweetText] = useState("");
@@ -28,7 +29,7 @@ const Home = ({ token, timeline, createTweet }) => {
   };
 
   const handleRetweet = (tweet) => {
-    // retweet(token, tweet);
+    retweet({ token, tweet });
   };
 
   const handleChange = (e) => {
@@ -94,7 +95,7 @@ const Home = ({ token, timeline, createTweet }) => {
               key={timelineTweet._id}
               tweet={timelineTweet.tweet}
               handleReply={handleReply}
-              handleRetweet={handleRetweet}
+              handleRetweet={() => handleRetweet(timelineTweet.tweet)}
               usernameProfile={timelineTweet.tweet.username}
               isRetweet={timelineTweet.type === "retweet"}
             />

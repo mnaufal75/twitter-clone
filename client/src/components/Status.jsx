@@ -17,6 +17,7 @@ import { Link, useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import CreateTweetModal from "../modals/CreateTweetModal";
 import SingleTweet from "./SingleTweet";
+import { retweet } from "../actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -24,7 +25,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const Status = ({ cookies, token }) => {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    retweet: (query) => dispatch(retweet(query)),
+  };
+};
+
+const Status = ({ cookies, token, retweet }) => {
   const [tweet, setTweet] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [modalTweet, setModalTweet] = useState("");
@@ -54,7 +61,7 @@ const Status = ({ cookies, token }) => {
   };
 
   const handleRetweet = (tweet) => {
-    // retweet(token, tweet);
+    retweet({ token, tweet });
   };
 
   return (
@@ -137,7 +144,7 @@ const Status = ({ cookies, token }) => {
               key={t._id}
               tweet={t}
               handleReply={handleReply}
-              handleRetweet={handleRetweet}
+              handleRetweet={() => handleRetweet(t)}
               usernameProfile={t.username}
             />
           );
@@ -152,4 +159,4 @@ const Status = ({ cookies, token }) => {
   );
 };
 
-export default connect(mapStateToProps)(Status);
+export default connect(mapStateToProps, mapDispatchToProps)(Status);

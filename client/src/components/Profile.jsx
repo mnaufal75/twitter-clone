@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
-import { getProfileTimeline } from "../actions";
+import { getProfileTimeline, retweet } from "../actions";
 import CreateTweetModal from "../modals/CreateTweetModal";
 import SingleTweet from "./SingleTweet";
 
@@ -27,10 +27,17 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getProfileTimeline: (query) => dispatch(getProfileTimeline(query)),
+    retweet: (query) => dispatch(retweet(query)),
   };
 };
 
-const Profile = ({ token, username, profileTimeline, getProfileTimeline }) => {
+const Profile = ({
+  token,
+  username,
+  profileTimeline,
+  getProfileTimeline,
+  retweet,
+}) => {
   const [datas, setDatas] = useState([]);
   const [followed, setFollowed] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -76,8 +83,8 @@ const Profile = ({ token, username, profileTimeline, getProfileTimeline }) => {
     setTweet(data);
   };
 
-  const handleRetweet = (tweet) => {
-    // retweet(token, tweet);
+  const handleRetweet = async (tweet) => {
+    retweet({ token, tweet });
   };
 
   const followAccount = async (username) => {
@@ -194,7 +201,7 @@ const Profile = ({ token, username, profileTimeline, getProfileTimeline }) => {
             key={t._id}
             tweet={t.tweet}
             handleReply={handleReply}
-            handleRetweet={handleRetweet}
+            handleRetweet={() => handleRetweet(t.tweet)}
             usernameProfile={usernameProfile}
             isRetweet={t.type === "retweet"}
           />
